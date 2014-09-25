@@ -64,7 +64,6 @@
       NSLog(@"*** Error renewing session: %@", error);
       return;
     }
-    
     [SettingsHelper setupSPTSession:session];
     [self didFinishAuthorizingUserWithSession];
     
