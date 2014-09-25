@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+@class SPTListPage;
+
 @interface APIRequester : NSObject
 
 +(instancetype)sharedInstance;
+
+-(void)searchArtistsRelatedToArtist:(NSString*)artistName success:(void (^)(NSArray*))success error:(void (^)(NSError*))error;
 @end

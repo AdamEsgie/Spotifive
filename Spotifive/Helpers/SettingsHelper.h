@@ -11,11 +11,16 @@
 
 @class SPTSession;
 
+static NSString * kCountryCode = @"US";
 static NSString * kSession = @"SpotifySession";
 static NSString * const kClientId = @"da979439ae38465aab63ef3812610e09";
 static NSString * const kCallbackURL = @"spotifive://";
 static NSString * const kTokenSwapURL = @"http://spotifiver.appspot.com/swap";
 static NSString * const kTokenRefreshServiceURL = @"http://spotifiver.appspot.com/refresh";
+
+static const CGFloat cellHeight = 55;
+
+typedef void (^delayedMethod)();
 
 @interface SettingsHelper : NSObject
 
@@ -24,5 +29,10 @@ static NSString * const kTokenRefreshServiceURL = @"http://spotifiver.appspot.co
 + (NSURL*)callbackURL;
 + (NSURL*)swapURL;
 + (void)setupSPTSession:(SPTSession *)session;
++ (UIColor*)spotifyGreenColor;
++ (UIColor*)borderColor;
++ (UIFont*)defaultLightFont;
++ (UIFont*)defaultRegularFont;
++ (NSString*)placeholderText;
 
 @end
