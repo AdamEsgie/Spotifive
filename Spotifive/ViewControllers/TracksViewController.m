@@ -44,6 +44,7 @@ static NSString *CellIdentifier = @"Register";
     self.view.frame = frame;
     self.view.backgroundColor = [SettingsHelper spotifyGreenColor];
     self.shouldGetTopTracks = YES;
+    self.currentIndex = 0;
   }
   return self;
 }
@@ -368,9 +369,9 @@ static NSString *CellIdentifier = @"Register";
   }
 }
 
-- (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeToTrack:(NSDictionary *)trackMetadata
+-(void)audioStreamingDidLosePermissionForPlayback:(SPTAudioStreamingController *)audioStreaming
 {
-
+  [self playOrPauseMusic];
 }
 
 #pragma mark - UITextFieldDelegate

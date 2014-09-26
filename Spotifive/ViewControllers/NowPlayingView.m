@@ -37,8 +37,12 @@
     self.coverView.alpha = 0.35f;
     [self addSubview:self.coverView];
     
+    self.smileyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 20, 20)];
+    self.smileyImageView.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.smileyImageView];
+    
     self.trackLabel = [UILabel new];
-    self.trackLabel.frame = CGRectMake(0, 30, self.width, 100);
+    self.trackLabel.frame = CGRectMake(0, self.smileyImageView.bottom, self.width, 100);
     self.trackLabel.textColor = [UIColor whiteColor];
     self.trackLabel.font = [SettingsHelper defaultHeavyFont];
     self.trackLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -139,11 +143,6 @@
 
 -(void)setupSmileyWithOption:(BOOL)option
 {
-  if (!self.smileyImageView) {
-    self.smileyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 30, 30)];
-    self.smileyImageView.backgroundColor = [UIColor clearColor];
-    [self addSubview:self.smileyImageView];
-  }
   if (option) {
     self.smileyImageView.image = [UIImage imageNamed:@"smiley"];
   } else {
