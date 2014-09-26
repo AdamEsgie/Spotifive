@@ -197,6 +197,7 @@ static NSString *CellIdentifier = @"Register";
   
   [self.trackQualityView removeFromSuperview];
   self.trackQualityView = nil;
+  [self.nowPlayingView setupSmileyWithOption:self.shouldGetTopTracks];
   
   [UIView animateWithDuration:duration animations:^{
     
@@ -269,8 +270,8 @@ static NSString *CellIdentifier = @"Register";
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-  [cell.accessoryView removeFromSuperview];
-  cell.accessoryView = nil;
+  [[(TrackTableViewCell*)cell playView] removeFromSuperview];
+  [(TrackTableViewCell*)cell setPlayView:nil];
 }
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -303,6 +304,9 @@ static NSString *CellIdentifier = @"Register";
   if (cell == nil) {
     cell = [[TrackTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
   }
+  
+  [cell.playView removeFromSuperview];
+  cell.playView = nil;
   
   SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
   cell.textLabel.text = artist.name;
@@ -356,7 +360,7 @@ static NSString *CellIdentifier = @"Register";
 
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying
 {
-  if (isPlaying == NO && !self.paused) {
+  if (isPlaying == NO && !self.paused && self.currentIndex < self.relatedArtists.count) {
     self.currentIndex++;
     [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0]];
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];

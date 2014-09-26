@@ -26,5 +26,6 @@
 -(instancetype)initWithFrame:(CGRect)frame;
 -(void)addArtistCoverArt;
 -(void)updateLabelsWithName:(NSString*)name andInterval:(NSTimeInterval)interval;
+-(void)setupSmileyWithOption:(BOOL)option;
 
 @end

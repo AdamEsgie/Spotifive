@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UILabel *timerLabel;
 @property (nonatomic, strong) UIImageView *coverView;
 @property (nonatomic, strong) UIView *tapView;
+@property (nonatomic, strong) UIImageView *smileyImageView;
 @property NSTimeInterval trackTime;
 @property BOOL isLoadingImage;
 
@@ -136,4 +137,17 @@
   [self.delegate playOrPauseMusic];
 }
 
+-(void)setupSmileyWithOption:(BOOL)option
+{
+  if (!self.smileyImageView) {
+    self.smileyImageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 25, 30, 30)];
+    self.smileyImageView.backgroundColor = [UIColor clearColor];
+    [self addSubview:self.smileyImageView];
+  }
+  if (option) {
+    self.smileyImageView.image = [UIImage imageNamed:@"smiley"];
+  } else {
+    self.smileyImageView.image = [UIImage imageNamed:@"not-smiley"];
+  }
+}
 @end

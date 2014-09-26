@@ -12,7 +12,7 @@
 
 @interface TrackTableViewCell : UITableViewCell
 
-@property (nonatomic,strong) RefreshView *refreshView;
+@property (nonatomic,strong) UIImageView *playView;
 
 -(void)addPlayToAccessoryView;
 
