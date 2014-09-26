@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */; };
+		CA466D9F19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */; };
 		CA5E572319D2DD3B0087DCCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E572219D2DD3B0087DCCF /* main.m */; };
 		CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E572519D2DD3B0087DCCF /* AppDelegate.m */; };
 		CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA5E572D19D2DD3B0087DCCF /* Images.xcassets */; };
@@ -50,6 +52,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CA466D9C19D5F4D600C8DCB1 /* TrackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewCell.h; sourceTree = "<group>"; };
+		CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackTableViewCell.m; sourceTree = "<group>"; };
 		CA5E571D19D2DD3B0087DCCF /* Spotifive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotifive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA5E572119D2DD3B0087DCCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA5E572219D2DD3B0087DCCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -146,6 +150,8 @@
 				CA5E57BE19D4581D0087DCCF /* LoginViewController.m */,
 				CA5E57B519D4580F0087DCCF /* TracksViewController.h */,
 				CA5E57B619D4580F0087DCCF /* TracksViewController.m */,
+				CA466D9C19D5F4D600C8DCB1 /* TrackTableViewCell.h */,
+				CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */,
 				CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */,
 				CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */,
 				CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */,
@@ -344,6 +350,7 @@
 				CA5E57CB19D47A6E0087DCCF /* UIView+MCSizes.m in Sources */,
 				CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */,
 				CA5E57B319D458060087DCCF /* SettingsHelper.m in Sources */,
+				CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */,
 				CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
 				CA5E57D719D48C340087DCCF /* AnimationHelper.m in Sources */,
 				CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */,
@@ -363,6 +370,7 @@
 				CA5E57BC19D458160087DCCF /* MainNavigationController.m in Sources */,
 				CA5E57B019D457F90087DCCF /* APIRequester.m in Sources */,
 				CA5E57EF19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
+				CA466D9F19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */,
 				CA5E573D19D2DD3B0087DCCF /* SpotifiveTests.m in Sources */,
 				CA5E57CC19D47A6E0087DCCF /* UIView+MCSizes.m in Sources */,
 			);

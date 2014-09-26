@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIView *tapView;
 @property (nonatomic, strong) UIButton *qualityButton;
 @property (nonatomic, strong) UIButton *closeButton;
+@property (nonatomic, strong) UILabel *infoLabel;
 
 @end
 
@@ -48,8 +49,18 @@
     [self.closeButton setImage:[UIImage imageNamed:@"reset"] forState:UIControlStateNormal];
     self.closeButton.backgroundColor = [UIColor clearColor];
     
+    self.infoLabel = [UILabel new];
+    self.infoLabel.frame = CGRectMake(0, self.qualityButton.bottom, self.width, self.height - self.qualityButton.bottom);
+    self.infoLabel.textAlignment = NSTextAlignmentCenter;
+    self.infoLabel.font = [UIFont fontWithName:@"AvenirNext-UltraLight" size:16.0f];
+    self.infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.infoLabel.numberOfLines = 0;
+    self.infoLabel.textColor = [UIColor whiteColor];
+    self.infoLabel.text = @"Tap to toggle top 5 best/worst tracks by related artists.";
+    
     [[vibrancyEffectView contentView] addSubview:self.closeButton];
     [[vibrancyEffectView contentView] addSubview:self.qualityButton];
+    [[vibrancyEffectView contentView] addSubview:self.infoLabel];
     [[blurEffectView contentView] addSubview:vibrancyEffectView];
   }
   return self;
@@ -70,6 +81,7 @@
   }
   
   [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    self.infoLabel.alpha = 0.0f;
     self.qualityButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.qualityButton withScale:110.0];
   } completion:^(BOOL finished) {
     

@@ -16,9 +16,14 @@
   self = [super initWithFrame:frame];
   if (self) {
     
-    self.clipsToBounds = YES;
-    self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = self.frame.size.width/2;
+    UIView *view = [[UIView alloc] initWithFrame:CGRectInset(self.bounds, 10, 10)];
+    view.clipsToBounds = YES;
+    view.layer.cornerRadius = view.frame.size.width/2;
+    [self addSubview:view];
+    
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    blurEffectView.frame = view.bounds;
+    [view addSubview:blurEffectView];
   }
   return self;
 }

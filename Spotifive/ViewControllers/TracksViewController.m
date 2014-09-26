@@ -14,11 +14,13 @@
 #import "APIRequester.h"
 #import "NowPlayingView.h"
 #import "TrackQualityView.h"
+#import "TrackTableViewCell.h"
 
 static NSString *CellIdentifier = @"Register";
 
 @interface TracksViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, TrackQualityViewDelegate, NowPlayingViewDelegate>
 
+@property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIButton *sendButton;
@@ -56,6 +58,23 @@ static NSString *CellIdentifier = @"Register";
   [self setupContainerAndTextField];
   [self setupPlayer];
   [self setupNowPlayingView];
+  
+  if (!self.relatedArtists) {
+    [self setupPlaceholder];
+  }
+}
+
+-(void)setupPlaceholder
+{
+  self.infoLabel = [UILabel new];
+  self.infoLabel.frame = CGRectMake(0, 0, self.view.width, self.view.height - self.containerView.height);
+  self.infoLabel.textAlignment = NSTextAlignmentCenter;
+  self.infoLabel.font = [SettingsHelper defaultTimerFont];
+  self.infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+  self.infoLabel.numberOfLines = 0;
+  self.infoLabel.textColor = [UIColor whiteColor];
+  self.infoLabel.text = @"Welcome To Spotifive";
+  [self.view addSubview:self.infoLabel];
 }
 
 -(void)setupPlayer
@@ -131,10 +150,22 @@ static NSString *CellIdentifier = @"Register";
   CGRect keyboardRect = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
   NSTimeInterval duration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
   UIViewAnimationCurve curve = [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
+  
+  [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:80.0];
+  } completion:^(BOOL finished) {
+    self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:100.0];
+    
+    [self.sendButton removeTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton setImage:[UIImage imageNamed:@"send-icon"] forState:UIControlStateNormal];
+    
+  }];
 
   [UIView animateWithDuration:duration animations:^{
     
     self.trackQualityView.alpha = 1.0f;
+    self.infoLabel.alpha = 0.0f;
     
     [UIView setAnimationCurve:curve];
     self.containerView.frame = CGRectMake(self.containerView.origin.x, self.view.height - keyboardRect.size.height - self.containerView.height, self.containerView.width, self.containerView.height);
@@ -163,6 +194,10 @@ static NSString *CellIdentifier = @"Register";
   
   [UIView animateWithDuration:duration animations:^{
     
+    if (!self.relatedArtists) {
+      self.infoLabel.alpha = 1.0f;
+    }
+    
     [UIView setAnimationCurve:curve];
     self.containerView.frame = CGRectMake(self.containerView.origin.x, self.view.height - self.containerView.height, self.containerView.width, self.containerView.height);
     
@@ -175,17 +210,6 @@ static NSString *CellIdentifier = @"Register";
 -(IBAction)search:(id)sender
 {
   [self.textField becomeFirstResponder];
-  
-  [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-    self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:80.0];
-  } completion:^(BOOL finished) {
-    self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:100.0];
-    
-    [self.sendButton removeTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton setImage:[UIImage imageNamed:@"send-icon"] forState:UIControlStateNormal];
-    
-  }];
 }
 
 -(IBAction)send:(id)sender
@@ -222,6 +246,8 @@ static NSString *CellIdentifier = @"Register";
         } completion:^(BOOL finished) {
           [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
           [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+          UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+          [(TrackTableViewCell*)cell addPlayToAccessoryView];
         }];
         
       }];
@@ -234,10 +260,18 @@ static NSString *CellIdentifier = @"Register";
 }
 
 #pragma mark - UITableViewDelegate
+-(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+  [cell.accessoryView removeFromSuperview];
+  cell.accessoryView = nil;
+}
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
   [self playTrackAtIndexPath:indexPath];
+  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+  [(TrackTableViewCell*)cell addPlayToAccessoryView];
 }
 
 #pragma mark - UITableViewDatasource
@@ -259,15 +293,10 @@ static NSString *CellIdentifier = @"Register";
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   
-  UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+  TrackTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
   if (cell == nil) {
-    cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    cell = [[TrackTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
   }
-  
-  cell.textLabel.font = [SettingsHelper defaultLightFont];
-  cell.textLabel.textColor = [UIColor whiteColor];
-  cell.backgroundColor = [UIColor clearColor];
-  cell.selectionStyle = UITableViewCellSelectionStyleNone;
   
   SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
   cell.textLabel.text = artist.name;
@@ -280,7 +309,7 @@ static NSString *CellIdentifier = @"Register";
 -(void)playTrackAtIndexPath:(NSIndexPath *)indexPath
 {
   if (self.relatedArtists.count > 0) {
-  
+    
     SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
     self.nowPlayingView.artist = artist;
     [self.nowPlayingView addArtistCoverArt];
