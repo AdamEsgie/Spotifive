@@ -56,11 +56,13 @@
 
 -(void)addPlayToAccessoryView
 {
-  self.accessoryView = [UIView new];
-//  self.accessoryView.frame = CGRectMake(self.width - self.height, 0, self.height, self.height);
-//  self.refreshView = [[RefreshView alloc] initWithFrame:CGRectMake(self.width - self.height, 0, self.height, self.height)];
-//  [self.accessoryView addSubview:self.refreshView];
-//  [self animateRefreshView];
+  UIView *view = [UIView new];
+
+//  UIImageView *playView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"play"]];
+//  playView.frame = self.accessoryView.frame;
+//  [view addSubview:playView];
+  
+  self.accessoryView = view;
 }
 
 -(void)animateRefreshView

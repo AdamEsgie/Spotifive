@@ -37,7 +37,7 @@
     [vibrancyEffectView setFrame:self.bounds];
     
     self.qualityButton = [UIButton new];
-    self.qualityButton.frame = CGRectMake(self.width/2 - 80, self.height/2 - 80, 160, 160);
+    self.qualityButton.frame = CGRectMake(self.width/2 - 80, self.height/2 - 85, 160, 160);
     [self.qualityButton addTarget:self action:@selector(qualityButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     self.qualityButton.backgroundColor = [UIColor clearColor];
     [self.qualityButton setImage:[UIImage imageNamed:@"smiley"] forState:UIControlStateNormal];
@@ -58,10 +58,10 @@
     self.infoLabel.textColor = [UIColor whiteColor];
     self.infoLabel.text = @"Tap to toggle top 5 best/worst tracks by related artists.";
     
-    [[vibrancyEffectView contentView] addSubview:self.closeButton];
-    [[vibrancyEffectView contentView] addSubview:self.qualityButton];
-    [[vibrancyEffectView contentView] addSubview:self.infoLabel];
-    [[blurEffectView contentView] addSubview:vibrancyEffectView];
+    [vibrancyEffectView.contentView addSubview:self.closeButton];
+    [vibrancyEffectView.contentView addSubview:self.infoLabel];
+    [vibrancyEffectView.contentView addSubview:self.qualityButton];
+    [blurEffectView.contentView addSubview:vibrancyEffectView];
   }
   return self;
 }

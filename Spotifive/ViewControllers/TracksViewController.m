@@ -51,8 +51,7 @@ static NSString *CellIdentifier = @"Register";
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+
   
   [self setupTableView];
   [self setupContainerAndTextField];
@@ -62,6 +61,13 @@ static NSString *CellIdentifier = @"Register";
   if (!self.relatedArtists) {
     [self setupPlaceholder];
   }
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 -(void)setupPlaceholder

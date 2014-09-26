@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */; };
 		CA466D9F19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */; };
+		CA466DA019D6065E00C8DCB1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA5E572D19D2DD3B0087DCCF /* Images.xcassets */; };
 		CA5E572319D2DD3B0087DCCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E572219D2DD3B0087DCCF /* main.m */; };
 		CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E572519D2DD3B0087DCCF /* AppDelegate.m */; };
 		CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA5E572D19D2DD3B0087DCCF /* Images.xcassets */; };
@@ -333,6 +334,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA466DA019D6065E00C8DCB1 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
