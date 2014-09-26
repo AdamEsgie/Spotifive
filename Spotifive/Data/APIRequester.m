@@ -66,4 +66,88 @@
   }];
 }
 
+-(void)searchTopTracksForArtist:(SPTArtist*)artist success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))error
+{
+  [artist requestTopTracksForTerritory:kCountryCode withSession:[SettingsHelper session] callback:^(NSError *error, id object) {
+    
+      success([object firstObject]);
+  }];
+}
+-(void)searchWorstTracksForArtist:(SPTArtist*)artist success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))error
+{
+  [self searcAllAlbumsForArtist:artist success:^(SPTAlbum *album) {
+    
+    [self searcAllTracksForAlbum:album success:^(SPTTrack *track) {
+      
+      success(track);
+    
+    } error:^(NSError *error) {
+      
+    }];
+    
+  } error:^(NSError *error) {
+    if (error != nil) {
+      NSLog(@"*** Auth error: %@", error);
+      return;
+    }
+  }];
+}
+
+-(void)searcAllAlbumsForArtist:(SPTArtist*)artist success:(void (^)(SPTAlbum*))success error:(void (^)(NSError*))error
+{
+  [artist requestAlbumsOfType:SPTAlbumTypeAlbum withSession:[SettingsHelper session] availableInTerritory:kCountryCode callback:^(NSError *error, id object) {
+    
+    SPTListPage *listPage = object;
+    NSArray *albumsArray = [NSArray arrayWithArray:listPage.items];
+    NSMutableArray *albumsArrayCopy = [NSMutableArray arrayWithArray:albumsArray];
+    NSMutableArray *albumsByPopularity = [NSMutableArray array];
+    
+    for (int i = 0; i < albumsArray.count; i++)
+    {
+      [SPTRequest requestItemFromPartialObject:[albumsArray objectAtIndex:i] withSession:[SettingsHelper session] callback:^(NSError *error, id object) {
+        
+        if (error != nil) {
+          NSLog(@"*** Auth error: %@", error);
+          return;
+        }
+        
+        [albumsByPopularity addObject:object];
+        [albumsArrayCopy removeObject:[albumsArray objectAtIndex:i]];
+        
+        if (albumsArrayCopy.count < 1) {
+          [albumsByPopularity sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:YES]]];
+          success([albumsByPopularity firstObject]);
+        }
+        
+      }];
+    }
+  }];
+}
+
+-(void)searcAllTracksForAlbum:(SPTAlbum*)album success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))error
+{
+  NSArray *tracksArray = [NSArray arrayWithArray:album.firstTrackPage.items];
+  NSMutableArray *tracksArrayCopy = [NSMutableArray arrayWithArray:tracksArray];
+  NSMutableArray *tracksByPopularity = [NSMutableArray array];
+  
+  for (int i = 0; i < tracksArray.count; i++)
+  {
+    [SPTRequest requestItemFromPartialObject:[tracksArray objectAtIndex:i] withSession:[SettingsHelper session] callback:^(NSError *error, id object) {
+      
+      if (error != nil) {
+        NSLog(@"*** Auth error: %@", error);
+        return;
+      }
+      
+      [tracksByPopularity addObject:object];
+      [tracksArrayCopy removeObject:[tracksArray objectAtIndex:i]];
+      
+      if (tracksArrayCopy.count < 1) {
+        [tracksByPopularity sortUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"popularity" ascending:YES]]];
+        success([tracksByPopularity firstObject]);
+      }
+      
+    }];
+  }
+}
 @end

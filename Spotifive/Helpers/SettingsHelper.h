@@ -19,6 +19,7 @@ static NSString * const kTokenSwapURL = @"http://spotifiver.appspot.com/swap";
 static NSString * const kTokenRefreshServiceURL = @"http://spotifiver.appspot.com/refresh";
 
 static const CGFloat cellHeight = 55;
+static const CGFloat refreshSize = 40;
 
 typedef void (^delayedMethod)();
 
@@ -33,6 +34,8 @@ typedef void (^delayedMethod)();
 + (UIColor*)borderColor;
 + (UIFont*)defaultLightFont;
 + (UIFont*)defaultRegularFont;
++ (UIFont*)defaultHeavyFont;
++ (UIFont*)defaultTimerFont;
 + (NSString*)placeholderText;
 
 @end

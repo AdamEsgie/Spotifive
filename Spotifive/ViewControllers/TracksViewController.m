@@ -13,10 +13,11 @@
 #import <Spotify/Spotify.h>
 #import "APIRequester.h"
 #import "NowPlayingView.h"
+#import "TrackQualityView.h"
 
 static NSString *CellIdentifier = @"Register";
 
-@interface TracksViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate>
+@interface TracksViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, TrackQualityViewDelegate>
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UITextField *textField;
@@ -25,6 +26,7 @@ static NSString *CellIdentifier = @"Register";
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NowPlayingView *nowPlayingView;
 @property (nonatomic, strong) SPTAudioStreamingController *player;
+@property (nonatomic, strong) TrackQualityView *trackQualityView;
 @property NSInteger currentIndex;
 @property BOOL shouldGetTopTracks;
 
@@ -79,12 +81,6 @@ static NSString *CellIdentifier = @"Register";
   }
 }
 
-- (void)updateNowPlayingView
-{
-  self.nowPlayingView.artist = [self.relatedArtists objectAtIndex:self.currentIndex];
-  [self.nowPlayingView addArtistCoverArt];
-}
-
 -(void)setupTableView
 {
   self.tableView = nil;
@@ -97,7 +93,7 @@ static NSString *CellIdentifier = @"Register";
   self.tableView.backgroundColor = [UIColor clearColor];
   self.tableView.separatorColor = [SettingsHelper borderColor];
   self.tableView.contentOffset = CGPointZero;
-  self.tableView.contentInset = UIEdgeInsetsMake(-10, 0, 0, 0);
+  self.tableView.contentInset = UIEdgeInsetsMake(-6, 0, 0, 0);
   self.tableView.separatorInset = UIEdgeInsetsZero;
   self.tableView.allowsMultipleSelection = NO;
   self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeOnDrag;
@@ -134,13 +130,27 @@ static NSString *CellIdentifier = @"Register";
   CGRect keyboardRect = [[[notification userInfo] valueForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
   NSTimeInterval duration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
   UIViewAnimationCurve curve = [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
+
+  
   
   [UIView animateWithDuration:duration animations:^{
+    
+    self.trackQualityView.alpha = 1.0f;
     
     [UIView setAnimationCurve:curve];
     self.containerView.frame = CGRectMake(self.containerView.origin.x, self.view.height - keyboardRect.size.height - self.containerView.height, self.containerView.width, self.containerView.height);
     
   } completion:^(BOOL finished) {
+    
+    self.trackQualityView = [[TrackQualityView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.containerView.top)];
+    self.trackQualityView.delegate = self;
+    self.trackQualityView.alpha = 0.0f;
+    [self.trackQualityView addTapRecognizerToDismissKeyboard];
+    [self.view addSubview:self.trackQualityView];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+      self.trackQualityView.alpha = 1.0f;
+    }];
     
   }];
 }
@@ -149,6 +159,9 @@ static NSString *CellIdentifier = @"Register";
 {
   NSTimeInterval duration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
   UIViewAnimationCurve curve = [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
+  
+  [self.trackQualityView removeFromSuperview];
+  self.trackQualityView = nil;
   
   [UIView animateWithDuration:duration animations:^{
     
@@ -185,7 +198,6 @@ static NSString *CellIdentifier = @"Register";
       } completion:^(BOOL finished) {
         [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
         [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        [self updateNowPlayingView];
       }];
       
     }];
@@ -242,16 +254,32 @@ static NSString *CellIdentifier = @"Register";
 #pragma mark - Track Player Delegates
 -(void)playTrackAtIndexPath:(NSIndexPath *)indexPath
 {
-  SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
+  if (self.relatedArtists.count > 0) {
   
-  if (self.shouldGetTopTracks) {
-    [artist requestTopTracksForTerritory:kCountryCode withSession:[SettingsHelper session] callback:^(NSError *error, id object) {
-      NSArray *tracks = [NSArray arrayWithArray:object];
-      [self.player playTrackProvider:[tracks firstObject] callback:nil];
-      self.currentIndex = indexPath.row;
-      [self updateNowPlayingView];
-    }];
+    SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
+    self.nowPlayingView.artist = artist;
+    [self.nowPlayingView addArtistCoverArt];
+  
+    if (self.shouldGetTopTracks) {
+      [[APIRequester sharedInstance] searchTopTracksForArtist:artist success:^(SPTTrack *track) {
+        [self.player playTrackProvider:track callback:nil];
+        [self.nowPlayingView updateLabelsWithName:track.name andInterval:track.duration];
+        self.currentIndex = indexPath.row;
+      } error:^(NSError *error) {
+
+      }];
+    } else {
+      [[APIRequester sharedInstance] searchWorstTracksForArtist:artist success:^(SPTTrack *track) {
+        [self.player playTrackProvider:track callback:nil];
+        [self.nowPlayingView updateLabelsWithName:track.name andInterval:track.duration];
+        self.currentIndex = indexPath.row;
+      } error:^(NSError *error) {
+        
+      }];
+    }
   } else {
+    // show progress hud error here
+    
     
   }
 }
@@ -269,13 +297,19 @@ static NSString *CellIdentifier = @"Register";
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying
 {
   if (isPlaying == NO) {
-    [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex++ inSection:0]];
+    self.currentIndex++;
+    [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0]];
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
-    [self updateNowPlayingView];
+    
   }
 }
 
-#pragma marl - UITextFieldDelegate
+- (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeToTrack:(NSDictionary *)trackMetadata
+{
+
+}
+
+#pragma mark - UITextFieldDelegate
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
@@ -283,6 +317,11 @@ static NSString *CellIdentifier = @"Register";
   return YES;
 }
 
+#pragma mark - TrackQualityView
+-(void)dismissKeyboard
+{
+  [self.textField resignFirstResponder];
+}
 
 #pragma mark - dealloc
 

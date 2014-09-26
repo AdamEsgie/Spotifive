@@ -35,6 +35,12 @@
 		CA5E57DF19D493080087DCCF /* send-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA5E57DD19D493080087DCCF /* send-icon@2x.png */; };
 		CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */; };
 		CA5E57EF19D4B14C0087DCCF /* NowPlayingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */; };
+		CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */; };
+		CA5E8C1D19D4E48800DDB4AD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */; };
+		CA5E8C1F19D4E49500DDB4AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */; };
+		CA5E8C2119D4E49B00DDB4AD /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */; };
+		CA5E8C2419D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
+		CA5E8C2519D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +90,13 @@
 		CA5E57DD19D493080087DCCF /* send-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon@2x.png"; path = "Assets/send-icon@2x.png"; sourceTree = "<group>"; };
 		CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NowPlayingView.h; path = ViewControllers/NowPlayingView.h; sourceTree = "<group>"; };
 		CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NowPlayingView.m; path = ViewControllers/NowPlayingView.m; sourceTree = "<group>"; };
+		CA5E8C0D19D4DC8C00DDB4AD /* RefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RefreshView.h; path = Helpers/RefreshView.h; sourceTree = "<group>"; };
+		CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RefreshView.m; path = Helpers/RefreshView.m; sourceTree = "<group>"; };
+		CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackQualityView.h; sourceTree = "<group>"; };
+		CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackQualityView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA5E8C2119D4E49B00DDB4AD /* CoreText.framework in Frameworks */,
+				CA5E8C1F19D4E49500DDB4AD /* CoreGraphics.framework in Frameworks */,
+				CA5E8C1D19D4E48800DDB4AD /* QuartzCore.framework in Frameworks */,
 				CA5E57D319D487C10087DCCF /* Foundation.framework in Frameworks */,
 				CA5E57D119D487A60087DCCF /* UIKit.framework in Frameworks */,
 				CA5E578E19D2E3C30087DCCF /* AVFoundation.framework in Frameworks */,
@@ -112,6 +128,9 @@
 		CA5E571419D2DD3B0087DCCF = {
 			isa = PBXGroup;
 			children = (
+				CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */,
+				CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */,
+				CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */,
 				CA5E571F19D2DD3B0087DCCF /* Spotifive */,
 				CA5E573919D2DD3B0087DCCF /* SpotifiveTests */,
 				CA5E571E19D2DD3B0087DCCF /* Products */,
@@ -140,6 +159,8 @@
 				CA5E57BE19D4581D0087DCCF /* LoginViewController.m */,
 				CA5E57B519D4580F0087DCCF /* TracksViewController.h */,
 				CA5E57B619D4580F0087DCCF /* TracksViewController.m */,
+				CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */,
+				CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */,
 				CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */,
 				CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */,
 				CA5E579019D2E4EC0087DCCF /* Helpers */,
@@ -194,6 +215,8 @@
 		CA5E579019D2E4EC0087DCCF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				CA5E8C0D19D4DC8C00DDB4AD /* RefreshView.h */,
+				CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */,
 				CA5E57D519D48C340087DCCF /* AnimationHelper.h */,
 				CA5E57D619D48C340087DCCF /* AnimationHelper.m */,
 				CA5E57B119D458060087DCCF /* SettingsHelper.h */,
@@ -350,8 +373,10 @@
 			files = (
 				CA5E57B719D4580F0087DCCF /* TracksViewController.m in Sources */,
 				CA5E57BB19D458160087DCCF /* MainNavigationController.m in Sources */,
+				CA5E8C2419D53DB500DDB4AD /* TrackQualityView.m in Sources */,
 				CA5E57BF19D4581D0087DCCF /* LoginViewController.m in Sources */,
 				CA5E57CB19D47A6E0087DCCF /* UIView+MCSizes.m in Sources */,
+				CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */,
 				CA5E57B319D458060087DCCF /* SettingsHelper.m in Sources */,
 				CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
 				CA5E579819D3392F0087DCCF /* SSKeychainQuery.m in Sources */,
@@ -368,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA5E57B819D4580F0087DCCF /* TracksViewController.m in Sources */,
+				CA5E8C2519D53DB500DDB4AD /* TrackQualityView.m in Sources */,
 				CA5E57B419D458060087DCCF /* SettingsHelper.m in Sources */,
 				CA5E57C019D4581D0087DCCF /* LoginViewController.m in Sources */,
 				CA5E57BC19D458160087DCCF /* MainNavigationController.m in Sources */,

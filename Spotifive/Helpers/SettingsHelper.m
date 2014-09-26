@@ -60,6 +60,16 @@
   return [UIFont fontWithName:@"AvenirNext-Regular" size:30.0f];
 }
 
++ (UIFont*)defaultHeavyFont
+{
+  return [UIFont fontWithName:@"AvenirNext-Heavy" size:30.0f];
+}
+
++ (UIFont*)defaultTimerFont
+{
+  return [UIFont fontWithName:@"AvenirNext-Heavy" size:60.0f];
+}
+
 + (NSString*)placeholderText
 {
   return @"Enter an artist";

@@ -13,8 +13,10 @@
 @interface NowPlayingView : UIView
 
 @property (nonatomic, strong) SPTArtist *artist;
+@property (nonatomic, strong) UIView *refreshView;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+-(instancetype)initWithFrame:(CGRect)frame;
 -(void)addArtistCoverArt;
+-(void)updateLabelsWithName:(NSString*)name andInterval:(NSTimeInterval)interval;
 
 @end
