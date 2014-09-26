@@ -8,6 +8,7 @@
 
 #import "TrackQualityView.h"
 #import "UIView+MCSizes.h"
+#import "AnimationHelper.h"
 
 @interface TrackQualityView ()
 
@@ -25,22 +26,31 @@
 {
   self = [super initWithFrame:frame];
   if (self) {
-    
-    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.frame = self.bounds;
     [self addSubview:blurEffectView];
     
+    UIVibrancyEffect *vibrancyEffect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+    UIVisualEffectView *vibrancyEffectView = [[UIVisualEffectView alloc] initWithEffect:vibrancyEffect];
+    [vibrancyEffectView setFrame:self.bounds];
+    
     self.qualityButton = [UIButton new];
-    self.qualityButton.frame = CGRectMake(self.width/2 - 40, self.height/2 - 40, 80, 80);
+    self.qualityButton.frame = CGRectMake(self.width/2 - 80, self.height/2 - 80, 160, 160);
     [self.qualityButton addTarget:self action:@selector(qualityButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    self.qualityButton.backgroundColor = [UIColor redColor];
-    [self addSubview:self.qualityButton];
+    self.qualityButton.backgroundColor = [UIColor clearColor];
+    [self.qualityButton setImage:[UIImage imageNamed:@"smiley"] forState:UIControlStateNormal];
+    [self.qualityButton setImage:[UIImage imageNamed:@"not-smiley"] forState:UIControlStateSelected];
     
     self.closeButton = [UIButton new];
     self.closeButton.frame = CGRectMake(10 , 30, 40, 40);
     [self.closeButton addTarget:self action:@selector(dismissKeyboard) forControlEvents:UIControlEventTouchUpInside];
-    self.closeButton.backgroundColor = [UIColor yellowColor];
-    [self addSubview:self.closeButton];
+    [self.closeButton setImage:[UIImage imageNamed:@"reset"] forState:UIControlStateNormal];
+    self.closeButton.backgroundColor = [UIColor clearColor];
+    
+    [[vibrancyEffectView contentView] addSubview:self.closeButton];
+    [[vibrancyEffectView contentView] addSubview:self.qualityButton];
+    [[blurEffectView contentView] addSubview:vibrancyEffectView];
   }
   return self;
 }
@@ -53,5 +63,17 @@
 -(IBAction)qualityButtonTapped:(id)sender
 {
   [self.delegate toggleQuality];
+  if (self.qualityButton.selected) {
+    [self.qualityButton setSelected:NO];
+  } else {
+    [self.qualityButton setSelected:YES];
+  }
+  
+  [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    self.qualityButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.qualityButton withScale:110.0];
+  } completion:^(BOOL finished) {
+    
+    self.qualityButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.qualityButton withScale:100.0];
+  }];
 }
 @end

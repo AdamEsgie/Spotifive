@@ -8,12 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol NowPlayingViewDelegate <NSObject>
+
+-(void)playOrPauseMusic;
+
+@end
+
 @class SPTArtist;
 
 @interface NowPlayingView : UIView
 
+@property (nonatomic, weak) id <NowPlayingViewDelegate> delegate;
 @property (nonatomic, strong) SPTArtist *artist;
 @property (nonatomic, strong) UIView *refreshView;
+@property (nonatomic, strong) NSTimer *timer;
 
 -(instancetype)initWithFrame:(CGRect)frame;
 -(void)addArtistCoverArt;

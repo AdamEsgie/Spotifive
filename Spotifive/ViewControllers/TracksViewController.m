@@ -17,7 +17,7 @@
 
 static NSString *CellIdentifier = @"Register";
 
-@interface TracksViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, TrackQualityViewDelegate>
+@interface TracksViewController () <UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, TrackQualityViewDelegate, NowPlayingViewDelegate>
 
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UITextField *textField;
@@ -29,6 +29,7 @@ static NSString *CellIdentifier = @"Register";
 @property (nonatomic, strong) TrackQualityView *trackQualityView;
 @property NSInteger currentIndex;
 @property BOOL shouldGetTopTracks;
+@property BOOL paused;
 
 @end
 
@@ -77,6 +78,7 @@ static NSString *CellIdentifier = @"Register";
 {
   if (!self.nowPlayingView) {
     self.nowPlayingView = [[NowPlayingView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.tableView.top)];
+    self.nowPlayingView.delegate = self;
     [self.view addSubview:self.nowPlayingView];
   }
 }
@@ -295,7 +297,7 @@ static NSString *CellIdentifier = @"Register";
 
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying
 {
-  if (isPlaying == NO) {
+  if (isPlaying == NO && !self.paused) {
     self.currentIndex++;
     [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0]];
     [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
@@ -316,7 +318,7 @@ static NSString *CellIdentifier = @"Register";
   return YES;
 }
 
-#pragma mark - TrackQualityView
+#pragma mark - TrackQualityView Delegate
 -(void)dismissKeyboard
 {
   [self.textField resignFirstResponder];
@@ -328,6 +330,21 @@ static NSString *CellIdentifier = @"Register";
     self.shouldGetTopTracks = NO;
   } else {
     self.shouldGetTopTracks = YES;
+  }
+}
+
+#pragma mark - NowPlaying Delegate
+-(void)playOrPauseMusic
+{
+  if (self.player.isPlaying) {
+    self.paused = YES;
+    [self.nowPlayingView.timer invalidate];
+    [self.player setIsPlaying:NO callback:nil];
+  } else {
+    self.paused = NO;
+    NSString *trackLength = self.player.currentTrackMetadata[SPTAudioStreamingMetadataTrackDuration];
+    [self.nowPlayingView updateLabelsWithName:nil andInterval:[trackLength doubleValue] - self.player.currentPlaybackPosition];
+    [self.player setIsPlaying:YES callback:nil];
   }
 }
 

@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UILabel *trackLabel;
 @property (nonatomic, strong) UILabel *timerLabel;
 @property (nonatomic, strong) UIImageView *coverView;
-@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, strong) UIView *tapView;
 @property NSTimeInterval trackTime;
 @property BOOL isLoadingImage;
 
@@ -52,6 +52,13 @@
     self.timerLabel.font = [SettingsHelper defaultTimerFont];
     self.timerLabel.textAlignment = NSTextAlignmentCenter;
     [self addSubview:self.timerLabel];
+    
+    self.tapView = [[UIView alloc] init];
+    self.tapView.frame = self.frame;
+    [self addSubview:self.tapView];
+    
+    UIGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pauseOrPlay)];
+    [self.tapView setGestureRecognizers:[NSArray arrayWithObject:tap]];
   }
   return self;
 }
@@ -83,7 +90,9 @@
 
 -(void)updateLabelsWithName:(NSString*)name andInterval:(NSTimeInterval)interval
 {
-  self.trackLabel.text = name;
+  if (name) {
+    self.trackLabel.text = name;
+  }
   self.trackTime = interval;
   [self startTrackTimer];
 }
@@ -119,6 +128,12 @@
     self.timerLabel.text = [NSString stringWithFormat:@"%@:%@", minutes, seconds];
     self.trackTime--;
   }
+}
+
+-(void)pauseOrPlay
+{
+  [self.timer invalidate];
+  [self.delegate playOrPauseMusic];
 }
 
 @end
