@@ -119,10 +119,9 @@ static NSString *CellIdentifier = @"Register";
     [self.containerView addSubview:self.textField];
     
     self.sendButton = [UIButton new];
-    UIImage *sendImage = [UIImage imageNamed:@"send-icon"];
-    self.sendButton.frame = CGRectMake(self.containerView.width - 14 - sendImage.size.width, self.containerView.height/2 - sendImage.size.height/2, sendImage.size.width, sendImage.size.height);
-    [self.sendButton addTarget:self action:@selector(searchForArtist:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton setImage:sendImage forState:UIControlStateNormal];
+    self.sendButton.frame = CGRectMake(self.containerView.width - searchButtonSize, self.containerView.height/2 - searchButtonSize/2, searchButtonSize, searchButtonSize);
+    [self.sendButton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton setImage:[UIImage imageNamed:@"search-icon"] forState:UIControlStateNormal];
     [self.containerView addSubview:self.sendButton];
   }
 }
@@ -133,8 +132,6 @@ static NSString *CellIdentifier = @"Register";
   NSTimeInterval duration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
   UIViewAnimationCurve curve = [[[notification userInfo] objectForKey:UIKeyboardAnimationCurveUserInfoKey] intValue];
 
-  
-  
   [UIView animateWithDuration:duration animations:^{
     
     self.trackQualityView.alpha = 1.0f;
@@ -175,36 +172,63 @@ static NSString *CellIdentifier = @"Register";
 }
 
 #pragma mark - IBAction
--(IBAction)searchForArtist:(id)sender
+-(IBAction)search:(id)sender
+{
+  [self.textField becomeFirstResponder];
+  
+  [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:80.0];
+  } completion:^(BOOL finished) {
+    self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:100.0];
+    
+    [self.sendButton removeTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton setImage:[UIImage imageNamed:@"send-icon"] forState:UIControlStateNormal];
+    
+  }];
+}
+
+-(IBAction)send:(id)sender
 {
   [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
     self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:80.0];
   } completion:^(BOOL finished) {
     self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:100.0];
+    
+    [self.sendButton removeTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sendButton setImage:[UIImage imageNamed:@"search-icon"] forState:UIControlStateNormal];
   }];
   
-  [[APIRequester sharedInstance] searchArtistsRelatedToArtist:self.textField.text success:^(NSArray *artists) {
-    
-    self.currentIndex = 0;
-    self.relatedArtists = artists;
-    
-    [self.tableView reloadData];
-    [self.textField resignFirstResponder];
-
-    [UIView animateWithDuration:0.5 animations:^{
-      self.tableView.alpha = 0.0f;
-    } completion:^(BOOL finished) {
+  [[APIRequester sharedInstance] searchArtistsWithString:self.textField.text success:^(SPTArtist *artist) {
+   
+    [[APIRequester sharedInstance] searchArtistsRelatedToArtist:artist success:^(NSArray *artists) {
+      self.currentIndex = 0;
+      self.relatedArtists = artists;
+      
+      [self.tableView reloadData];
+      [self.textField resignFirstResponder];
+      
       [UIView animateWithDuration:0.5 animations:^{
-        self.tableView.alpha = 1.0f;
+        self.textField.alpha = 0.0f;
+        self.tableView.alpha = 0.0f;
       } completion:^(BOOL finished) {
-        [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
-        [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        
+        self.textField.text = artist.name;
+        
+        [UIView animateWithDuration:0.5 animations:^{
+          self.textField.alpha = 1.0f;
+          self.tableView.alpha = 1.0f;
+        } completion:^(BOOL finished) {
+          [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+          [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+        }];
+        
       }];
+    } error:^(NSError *error) {
       
     }];
-    
   } error:^(NSError *error) {
-    
     
   }];
 }
@@ -322,6 +346,9 @@ static NSString *CellIdentifier = @"Register";
 -(void)dismissKeyboard
 {
   [self.textField resignFirstResponder];
+  [self.sendButton removeTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+  [self.sendButton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+  [self.sendButton setImage:[UIImage imageNamed:@"search-icon"] forState:UIControlStateNormal];
 }
 
 -(void)toggleQuality

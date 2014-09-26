@@ -23,7 +23,7 @@
   return sharedManager;
 }
 
--(void)searchArtistsRelatedToArtist:(NSString*)artistName success:(void (^)(NSArray*))success error:(void (^)(NSError*))error
+-(void)searchArtistsWithString:(NSString*)artistName success:(void (^)(SPTArtist*))success error:(void (^)(NSError*))error
 {
   SPTSession *session = [SettingsHelper session];
   
@@ -40,29 +40,38 @@
     SPTPartialArtist *partialArtist = [results firstObject];
     
     [SPTRequest requestItemFromPartialObject:partialArtist withSession:session callback:^(NSError *error, id object) {
-
+      
       if (error != nil) {
         NSLog(@"*** Auth error: %@", error);
         return;
       }
       
-      SPTArtist *artist = object;
-      [artist requestRelatedArtists:session callback:^(NSError *error, id object) {
-        if (error != nil) {
-          NSLog(@"*** Auth error: %@", error);
-          return;
-        }
-        
-        NSArray *artistArray = [NSArray arrayWithArray:object];
-        if (artistArray.count > 5) {
-          success([artistArray subarrayWithRange:NSMakeRange(0, 5)]);
-        } else {
-          success(artistArray);
-        }
-        
-
-      }];
+      success(object);
+      
     }];
+    
+  }];
+}
+
+-(void)searchArtistsRelatedToArtist:(SPTArtist*)artist success:(void (^)(NSArray*))success error:(void (^)(NSError*))error;
+{
+  SPTSession *session = [SettingsHelper session];
+  
+  if (!session) return;
+  
+  [artist requestRelatedArtists:session callback:^(NSError *error, id object) {
+    if (error != nil) {
+      NSLog(@"*** Auth error: %@", error);
+      return;
+    }
+    
+    NSArray *artistArray = [NSArray arrayWithArray:object];
+    if (artistArray.count > 5) {
+      success([artistArray subarrayWithRange:NSMakeRange(0, 5)]);
+    } else {
+      success(artistArray);
+    }
+    
   }];
 }
 

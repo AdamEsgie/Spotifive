@@ -29,8 +29,6 @@
 		CA5E57D119D487A60087DCCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E57D019D487A60087DCCF /* UIKit.framework */; };
 		CA5E57D319D487C10087DCCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E57D219D487C10087DCCF /* Foundation.framework */; };
 		CA5E57D719D48C340087DCCF /* AnimationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57D619D48C340087DCCF /* AnimationHelper.m */; };
-		CA5E57DE19D493080087DCCF /* send-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = CA5E57DC19D493080087DCCF /* send-icon.png */; };
-		CA5E57DF19D493080087DCCF /* send-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CA5E57DD19D493080087DCCF /* send-icon@2x.png */; };
 		CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */; };
 		CA5E57EF19D4B14C0087DCCF /* NowPlayingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */; };
 		CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */; };
@@ -80,8 +78,6 @@
 		CA5E57D219D487C10087DCCF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		CA5E57D519D48C340087DCCF /* AnimationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AnimationHelper.h; path = Helpers/AnimationHelper.h; sourceTree = "<group>"; };
 		CA5E57D619D48C340087DCCF /* AnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimationHelper.m; path = Helpers/AnimationHelper.m; sourceTree = "<group>"; };
-		CA5E57DC19D493080087DCCF /* send-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon.png"; path = "Assets/send-icon.png"; sourceTree = "<group>"; };
-		CA5E57DD19D493080087DCCF /* send-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "send-icon@2x.png"; path = "Assets/send-icon@2x.png"; sourceTree = "<group>"; };
 		CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NowPlayingView.h; path = ViewControllers/NowPlayingView.h; sourceTree = "<group>"; };
 		CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NowPlayingView.m; path = ViewControllers/NowPlayingView.m; sourceTree = "<group>"; };
 		CA5E8C0D19D4DC8C00DDB4AD /* RefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RefreshView.h; path = Helpers/RefreshView.h; sourceTree = "<group>"; };
@@ -165,7 +161,6 @@
 		CA5E572019D2DD3B0087DCCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				CA5E57D419D489A50087DCCF /* Assets */,
 				CA5E572119D2DD3B0087DCCF /* Info.plist */,
 				CA5E572219D2DD3B0087DCCF /* main.m */,
 				CA5E572D19D2DD3B0087DCCF /* Images.xcassets */,
@@ -242,15 +237,6 @@
 				CA5E57AE19D457F90087DCCF /* APIRequester.m */,
 			);
 			name = Data;
-			sourceTree = "<group>";
-		};
-		CA5E57D419D489A50087DCCF /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				CA5E57DC19D493080087DCCF /* send-icon.png */,
-				CA5E57DD19D493080087DCCF /* send-icon@2x.png */,
-			);
-			name = Assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -333,8 +319,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA5E57DE19D493080087DCCF /* send-icon.png in Resources */,
-				CA5E57DF19D493080087DCCF /* send-icon@2x.png in Resources */,
 				CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

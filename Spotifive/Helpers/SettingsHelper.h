@@ -20,6 +20,7 @@ static NSString * const kTokenRefreshServiceURL = @"http://spotifiver.appspot.co
 
 static const CGFloat cellHeight = 55;
 static const CGFloat refreshSize = 40;
+static const CGFloat searchButtonSize = 64;
 
 typedef void (^delayedMethod)();
 
