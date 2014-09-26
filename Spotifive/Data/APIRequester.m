@@ -86,16 +86,18 @@
     }];
     
   } error:^(NSError *error) {
-    if (error != nil) {
-      NSLog(@"*** Auth error: %@", error);
-      return;
-    }
+    
   }];
 }
 
 -(void)searcAllAlbumsForArtist:(SPTArtist*)artist success:(void (^)(SPTAlbum*))success error:(void (^)(NSError*))error
 {
   [artist requestAlbumsOfType:SPTAlbumTypeAlbum withSession:[SettingsHelper session] availableInTerritory:kCountryCode callback:^(NSError *error, id object) {
+    
+    if (error != nil) {
+      NSLog(@"*** Auth error: %@", error);
+      return;
+    }
     
     SPTListPage *listPage = object;
     NSArray *albumsArray = [NSArray arrayWithArray:listPage.items];

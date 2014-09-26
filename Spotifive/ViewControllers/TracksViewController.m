@@ -145,10 +145,9 @@ static NSString *CellIdentifier = @"Register";
     self.trackQualityView = [[TrackQualityView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.containerView.top)];
     self.trackQualityView.delegate = self;
     self.trackQualityView.alpha = 0.0f;
-    [self.trackQualityView addTapRecognizerToDismissKeyboard];
     [self.view addSubview:self.trackQualityView];
     
-    [UIView animateWithDuration:0.3 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
       self.trackQualityView.alpha = 1.0f;
     }];
     
@@ -321,6 +320,15 @@ static NSString *CellIdentifier = @"Register";
 -(void)dismissKeyboard
 {
   [self.textField resignFirstResponder];
+}
+
+-(void)toggleQuality
+{
+  if (self.shouldGetTopTracks) {
+    self.shouldGetTopTracks = NO;
+  } else {
+    self.shouldGetTopTracks = YES;
+  }
 }
 
 #pragma mark - dealloc

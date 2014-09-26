@@ -11,6 +11,7 @@
 @protocol TrackQualityViewDelegate <NSObject>
 
 -(void)dismissKeyboard;
+-(void)toggleQuality;
 
 @end
 
@@ -19,6 +20,5 @@
 @property (nonatomic, weak) id <TrackQualityViewDelegate> delegate;
 
 - (instancetype)initWithFrame:(CGRect)frame;
-- (void)addTapRecognizerToDismissKeyboard;
 
 @end
