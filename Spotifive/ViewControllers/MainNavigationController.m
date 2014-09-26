@@ -27,6 +27,7 @@
   if (self) {
     self.view.frame = frame;
     self.navigationBarHidden = YES;
+    self.view.backgroundColor = [UIColor whiteColor];
   }
   return self;
 }

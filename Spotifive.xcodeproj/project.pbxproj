@@ -12,8 +12,6 @@
 		CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA5E572D19D2DD3B0087DCCF /* Images.xcassets */; };
 		CA5E573D19D2DD3B0087DCCF /* SpotifiveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E573C19D2DD3B0087DCCF /* SpotifiveTests.m */; };
 		CA5E578E19D2E3C30087DCCF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E578D19D2E3C30087DCCF /* AVFoundation.framework */; };
-		CA5E579719D3392F0087DCCF /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E579419D3392F0087DCCF /* SSKeychain.m */; };
-		CA5E579819D3392F0087DCCF /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E579619D3392F0087DCCF /* SSKeychainQuery.m */; };
 		CA5E57AF19D457F90087DCCF /* APIRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57AE19D457F90087DCCF /* APIRequester.m */; };
 		CA5E57B019D457F90087DCCF /* APIRequester.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57AE19D457F90087DCCF /* APIRequester.m */; };
 		CA5E57B319D458060087DCCF /* SettingsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57B219D458060087DCCF /* SettingsHelper.m */; };
@@ -65,10 +63,6 @@
 		CA5E573B19D2DD3B0087DCCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA5E573C19D2DD3B0087DCCF /* SpotifiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifiveTests.m; sourceTree = "<group>"; };
 		CA5E578D19D2E3C30087DCCF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		CA5E579319D3392F0087DCCF /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKeychain.h; path = Libraries/SSKeychain.h; sourceTree = "<group>"; };
-		CA5E579419D3392F0087DCCF /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKeychain.m; path = Libraries/SSKeychain.m; sourceTree = "<group>"; };
-		CA5E579519D3392F0087DCCF /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SSKeychainQuery.h; path = Libraries/SSKeychainQuery.h; sourceTree = "<group>"; };
-		CA5E579619D3392F0087DCCF /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SSKeychainQuery.m; path = Libraries/SSKeychainQuery.m; sourceTree = "<group>"; };
 		CA5E57AD19D457F90087DCCF /* APIRequester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIRequester.h; path = Data/APIRequester.h; sourceTree = "<group>"; };
 		CA5E57AE19D457F90087DCCF /* APIRequester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIRequester.m; path = Data/APIRequester.m; sourceTree = "<group>"; };
 		CA5E57B119D458060087DCCF /* SettingsHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsHelper.h; path = Helpers/SettingsHelper.h; sourceTree = "<group>"; };
@@ -128,9 +122,6 @@
 		CA5E571419D2DD3B0087DCCF = {
 			isa = PBXGroup;
 			children = (
-				CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */,
-				CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */,
-				CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */,
 				CA5E571F19D2DD3B0087DCCF /* Spotifive */,
 				CA5E573919D2DD3B0087DCCF /* SpotifiveTests */,
 				CA5E571E19D2DD3B0087DCCF /* Products */,
@@ -203,6 +194,9 @@
 		CA5E574619D2DEFA0087DCCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */,
+				CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */,
+				CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */,
 				CA5E57D219D487C10087DCCF /* Foundation.framework */,
 				CA5E57D019D487A60087DCCF /* UIKit.framework */,
 				CA5E57C519D45BEE0087DCCF /* Spotify.framework */,
@@ -227,21 +221,9 @@
 			name = Helpers;
 			sourceTree = "<group>";
 		};
-		CA5E579119D338FC0087DCCF /* SSKeyChain */ = {
-			isa = PBXGroup;
-			children = (
-				CA5E579319D3392F0087DCCF /* SSKeychain.h */,
-				CA5E579419D3392F0087DCCF /* SSKeychain.m */,
-				CA5E579519D3392F0087DCCF /* SSKeychainQuery.h */,
-				CA5E579619D3392F0087DCCF /* SSKeychainQuery.m */,
-			);
-			name = SSKeyChain;
-			sourceTree = "<group>";
-		};
 		CA5E579219D3390D0087DCCF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				CA5E579119D338FC0087DCCF /* SSKeyChain */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -379,9 +361,7 @@
 				CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */,
 				CA5E57B319D458060087DCCF /* SettingsHelper.m in Sources */,
 				CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
-				CA5E579819D3392F0087DCCF /* SSKeychainQuery.m in Sources */,
 				CA5E57D719D48C340087DCCF /* AnimationHelper.m in Sources */,
-				CA5E579719D3392F0087DCCF /* SSKeychain.m in Sources */,
 				CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */,
 				CA5E57AF19D457F90087DCCF /* APIRequester.m in Sources */,
 				CA5E572319D2DD3B0087DCCF /* main.m in Sources */,
