@@ -123,7 +123,7 @@
   }
   
   if ([seconds integerValue] == 60) {
-    minutes = [NSString stringWithFormat:@"%d",[minutes integerValue] + 1];
+    minutes = [NSString stringWithFormat:@"%ld",[minutes integerValue] + 1];
     seconds = @"00";
   }
   

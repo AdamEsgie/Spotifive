@@ -80,7 +80,7 @@ static NSString *CellIdentifier = @"Register";
   self.infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
   self.infoLabel.numberOfLines = 0;
   self.infoLabel.textColor = [UIColor whiteColor];
-  self.infoLabel.text = @"Welcome To Spotifive";
+  self.infoLabel.text = @"Spotifive";
   [self.view addSubview:self.infoLabel];
 }
 

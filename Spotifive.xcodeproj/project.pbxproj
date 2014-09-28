@@ -40,6 +40,8 @@
 		CA5E8C2119D4E49B00DDB4AD /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */; };
 		CA5E8C2419D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
 		CA5E8C2519D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
+		CA8A069919D85ABD0011749D /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA8A069619D85ABD0011749D /* ProgressHUD.bundle */; };
+		CA8A069A19D85ABD0011749D /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8A069819D85ABD0011749D /* ProgressHUD.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,6 +94,10 @@
 		CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackQualityView.h; sourceTree = "<group>"; };
 		CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackQualityView.m; sourceTree = "<group>"; };
+		CA8A069619D85ABD0011749D /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		CA8A069719D85ABD0011749D /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		CA8A069819D85ABD0011749D /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		CA8A069C19D85C250011749D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,12 +157,7 @@
 				CA5E57BE19D4581D0087DCCF /* LoginViewController.m */,
 				CA5E57B519D4580F0087DCCF /* TracksViewController.h */,
 				CA5E57B619D4580F0087DCCF /* TracksViewController.m */,
-				CA466D9C19D5F4D600C8DCB1 /* TrackTableViewCell.h */,
-				CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */,
-				CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */,
-				CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */,
-				CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */,
-				CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */,
+				CA8A069419D85A320011749D /* Supplemental Views */,
 				CA5E579019D2E4EC0087DCCF /* Helpers */,
 				CA5E579219D3390D0087DCCF /* Libraries */,
 				CA5E574619D2DEFA0087DCCF /* Frameworks */,
@@ -168,6 +169,7 @@
 		CA5E572019D2DD3B0087DCCF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CA8A069C19D85C250011749D /* PrefixHeader.pch */,
 				CA5E572119D2DD3B0087DCCF /* Info.plist */,
 				CA5E572219D2DD3B0087DCCF /* main.m */,
 				CA5E572D19D2DD3B0087DCCF /* Images.xcassets */,
@@ -226,6 +228,7 @@
 		CA5E579219D3390D0087DCCF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				CA8A069519D85ABD0011749D /* ProgressHUD */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -244,6 +247,29 @@
 				CA5E57AE19D457F90087DCCF /* APIRequester.m */,
 			);
 			name = Data;
+			sourceTree = "<group>";
+		};
+		CA8A069419D85A320011749D /* Supplemental Views */ = {
+			isa = PBXGroup;
+			children = (
+				CA466D9C19D5F4D600C8DCB1 /* TrackTableViewCell.h */,
+				CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */,
+				CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */,
+				CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */,
+				CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */,
+				CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */,
+			);
+			name = "Supplemental Views";
+			sourceTree = "<group>";
+		};
+		CA8A069519D85ABD0011749D /* ProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				CA8A069619D85ABD0011749D /* ProgressHUD.bundle */,
+				CA8A069719D85ABD0011749D /* ProgressHUD.h */,
+				CA8A069819D85ABD0011749D /* ProgressHUD.m */,
+			);
+			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -326,6 +352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA8A069919D85ABD0011749D /* ProgressHUD.bundle in Resources */,
 				CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +382,7 @@
 				CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */,
 				CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
 				CA5E57D719D48C340087DCCF /* AnimationHelper.m in Sources */,
+				CA8A069A19D85ABD0011749D /* ProgressHUD.m in Sources */,
 				CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */,
 				CA5E57AF19D457F90087DCCF /* APIRequester.m in Sources */,
 				CA5E572319D2DD3B0087DCCF /* main.m in Sources */,
@@ -484,6 +512,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Spotifive/Frameworks/ios-sdk-beta-5",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Spotifive/PrefixHeader.pch;
 				INFOPLIST_FILE = Spotifive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -500,6 +530,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Spotifive/Frameworks/ios-sdk-beta-5",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Spotifive/PrefixHeader.pch;
 				INFOPLIST_FILE = Spotifive/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
