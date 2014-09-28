@@ -15,6 +15,7 @@
 #import "NowPlayingView.h"
 #import "TrackQualityView.h"
 #import "TrackTableViewCell.h"
+#import "ProgressHUD.h"
 
 static NSString *CellIdentifier = @"Register";
 
@@ -24,12 +25,11 @@ static NSString *CellIdentifier = @"Register";
 @property (nonatomic, strong) UIView *containerView;
 @property (nonatomic, strong) UITextField *textField;
 @property (nonatomic, strong) UIButton *sendButton;
-@property (nonatomic, strong) NSArray *relatedArtists;
+@property (nonatomic, strong) NSArray *playlist;
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NowPlayingView *nowPlayingView;
 @property (nonatomic, strong) SPTAudioStreamingController *player;
 @property (nonatomic, strong) TrackQualityView *trackQualityView;
-@property NSInteger currentIndex;
 @property BOOL shouldGetTopTracks;
 @property BOOL paused;
 
@@ -44,7 +44,6 @@ static NSString *CellIdentifier = @"Register";
     self.view.frame = frame;
     self.view.backgroundColor = [SettingsHelper spotifyGreenColor];
     self.shouldGetTopTracks = YES;
-    self.currentIndex = 0;
   }
   return self;
 }
@@ -53,13 +52,12 @@ static NSString *CellIdentifier = @"Register";
 {
   [super viewDidLoad];
 
-  
   [self setupTableView];
   [self setupContainerAndTextField];
   [self setupPlayer];
   [self setupNowPlayingView];
   
-  if (!self.relatedArtists) {
+  if (!self.playlist) {
     [self setupPlaceholder];
   }
 }
@@ -142,6 +140,7 @@ static NSString *CellIdentifier = @"Register";
     self.textField.tintColor = [SettingsHelper spotifyGreenColor];
     self.textField.delegate = self;
     self.textField.placeholder = [SettingsHelper placeholderText];
+    self.textField.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.containerView addSubview:self.textField];
     
     self.sendButton = [UIButton new];
@@ -150,6 +149,20 @@ static NSString *CellIdentifier = @"Register";
     [self.sendButton setImage:[UIImage imageNamed:@"search-icon"] forState:UIControlStateNormal];
     [self.containerView addSubview:self.sendButton];
   }
+}
+
+-(void)changeButtonFromSearchToSend
+{
+  [self.sendButton removeTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+  [self.sendButton addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+  [self.sendButton setImage:[UIImage imageNamed:@"send-icon"] forState:UIControlStateNormal];
+}
+
+-(void)changeButtonFromSendToSearch
+{
+  [self.sendButton removeTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
+  [self.sendButton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
+  [self.sendButton setImage:[UIImage imageNamed:@"search-icon"] forState:UIControlStateNormal];
 }
 #pragma mark - Keyboard Notifiations
 - (void)keyboardWillShow:(NSNotification *)notification
@@ -163,10 +176,7 @@ static NSString *CellIdentifier = @"Register";
   } completion:^(BOOL finished) {
     self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:100.0];
     
-    [self.sendButton removeTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton addTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton setImage:[UIImage imageNamed:@"send-icon"] forState:UIControlStateNormal];
-    
+    [self changeButtonFromSearchToSend];
   }];
 
   [UIView animateWithDuration:duration animations:^{
@@ -179,8 +189,7 @@ static NSString *CellIdentifier = @"Register";
     
   } completion:^(BOOL finished) {
     
-    self.trackQualityView = [[TrackQualityView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.containerView.top)];
-    self.trackQualityView.delegate = self;
+    self.trackQualityView = [[TrackQualityView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, self.containerView.top) andDelegate:self];
     self.trackQualityView.alpha = 0.0f;
     [self.view addSubview:self.trackQualityView];
     
@@ -202,7 +211,7 @@ static NSString *CellIdentifier = @"Register";
   
   [UIView animateWithDuration:duration animations:^{
     
-    if (!self.relatedArtists) {
+    if (!self.playlist) {
       self.infoLabel.alpha = 1.0f;
     }
     
@@ -226,20 +235,22 @@ static NSString *CellIdentifier = @"Register";
     self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:80.0];
   } completion:^(BOOL finished) {
     self.sendButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.sendButton withScale:100.0];
-    
-    [self.sendButton removeTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
-    [self.sendButton setImage:[UIImage imageNamed:@"search-icon"] forState:UIControlStateNormal];
   }];
+  
+  [ProgressHUD show:@"Finding artist"];
   
   [[APIRequester sharedInstance] searchArtistsWithString:self.textField.text success:^(SPTArtist *artist) {
    
-    [[APIRequester sharedInstance] searchArtistsRelatedToArtist:artist success:^(NSArray *artists) {
-      self.currentIndex = 0;
-      self.relatedArtists = artists;
+    [ProgressHUD show:@"Creating playlist"];
+    
+    [[APIRequester sharedInstance] generatePlaylistTracksRelatedToArtist:artist withType:self.shouldGetTopTracks success:^(NSArray *playlist) {
+    
+      self.playlist = playlist;
+      [ProgressHUD dismiss];
       
       [self.tableView reloadData];
       [self.textField resignFirstResponder];
+      [self changeButtonFromSendToSearch];
       
       [UIView animateWithDuration:0.5 animations:^{
         self.textField.alpha = 0.0f;
@@ -252,34 +263,36 @@ static NSString *CellIdentifier = @"Register";
           self.textField.alpha = 1.0f;
           self.tableView.alpha = 1.0f;
         } completion:^(BOOL finished) {
-          [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
-          [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-          UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-          [(TrackTableViewCell*)cell addPlayToAccessoryView];
+          
+          [self.player playTrackProvider:[self.playlist objectAtIndex:0][@"track"] callback:^(NSError *error) {
+          }];
         }];
         
       }];
     } error:^(NSError *error) {
+    
+      [ProgressHUD showError:@"Error generating playlist"];
+      self.textField.text = @"";
+      [self.textField becomeFirstResponder];
       
     }];
   } error:^(NSError *error) {
+    
+    [ProgressHUD showError:@"Error finding artist"];
+    self.textField.text = @"";
+    [self.textField becomeFirstResponder];
     
   }];
 }
 
 #pragma mark - UITableViewDelegate
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-  [[(TrackTableViewCell*)cell playView] removeFromSuperview];
-  [(TrackTableViewCell*)cell setPlayView:nil];
-}
-
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-  [self playTrackAtIndexPath:indexPath];
-  UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-  [(TrackTableViewCell*)cell addPlayToAccessoryView];
+  [self.player playTrackProvider:[self.playlist objectAtIndex:indexPath.row][@"track"] callback:^(NSError *error) {
+    if (error) {
+      [ProgressHUD showError:@"Error"];
+    }
+  }];
 }
 
 #pragma mark - UITableViewDatasource
@@ -295,7 +308,7 @@ static NSString *CellIdentifier = @"Register";
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-  return self.relatedArtists.count;
+  return self.playlist.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -309,7 +322,7 @@ static NSString *CellIdentifier = @"Register";
   [cell.playView removeFromSuperview];
   cell.playView = nil;
   
-  SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
+  SPTArtist *artist = [self.playlist objectAtIndex:indexPath.row][@"artist"];
   cell.textLabel.text = artist.name;
   cell.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:artist.smallestImage.imageURL]];
   
@@ -317,38 +330,6 @@ static NSString *CellIdentifier = @"Register";
 }
 
 #pragma mark - Track Player Delegates
--(void)playTrackAtIndexPath:(NSIndexPath *)indexPath
-{
-  if (self.relatedArtists.count > 0) {
-    
-    SPTArtist *artist = [self.relatedArtists objectAtIndex:indexPath.row];
-    self.nowPlayingView.artist = artist;
-    [self.nowPlayingView addArtistCoverArt];
-  
-    if (self.shouldGetTopTracks) {
-      [[APIRequester sharedInstance] searchTopTracksForArtist:artist success:^(SPTTrack *track) {
-        [self.player playTrackProvider:track callback:nil];
-        [self.nowPlayingView updateLabelsWithName:track.name andInterval:track.duration];
-        self.currentIndex = indexPath.row;
-      } error:^(NSError *error) {
-
-      }];
-    } else {
-      [[APIRequester sharedInstance] searchWorstTracksForArtist:artist success:^(SPTTrack *track) {
-        [self.player playTrackProvider:track callback:nil];
-        [self.nowPlayingView updateLabelsWithName:track.name andInterval:track.duration];
-        self.currentIndex = indexPath.row;
-      } error:^(NSError *error) {
-        
-      }];
-    }
-  } else {
-    // show progress hud error here
-    
-    
-  }
-}
-
 - (void)audioStreaming:(SPTAudioStreamingController *)audioStreaming didReceiveMessage:(NSString *)message
 {
   UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Message from Spotify"
@@ -361,11 +342,34 @@ static NSString *CellIdentifier = @"Register";
 
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying
 {
-  if (isPlaying == NO && !self.paused && self.currentIndex < self.relatedArtists.count) {
-    self.currentIndex++;
-    [self playTrackAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0]];
-    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:self.currentIndex inSection:0] animated:YES scrollPosition:UITableViewScrollPositionNone];
+  if (isPlaying == NO && !self.paused) {
+
+  }
+}
+
+- (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangeToTrack:(NSDictionary *)trackMetadata {
+  
+  if (trackMetadata == nil) {
     
+    [self.nowPlayingView updateLabelsWithName:nil andInterval:0];
+    
+  } else {
+    
+    for (int i = 0; i < self.playlist.count; i++)
+    {
+      NSDictionary *dict = [self.playlist objectAtIndex:i];
+      
+      if ([[dict[@"track"] name] isEqualToString:trackMetadata[SPTAudioStreamingMetadataTrackName]]) {
+        [self.nowPlayingView addArtistCoverArtForArtist:dict[@"artist"]];
+        
+        [(TrackTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]] addPlayToAccessoryView];
+      } else {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        [[(TrackTableViewCell*)cell playView] removeFromSuperview];
+        [(TrackTableViewCell*)cell setPlayView:nil];
+      }
+    }
+    [self.nowPlayingView updateLabelsWithName:trackMetadata[SPTAudioStreamingMetadataTrackName] andInterval:[trackMetadata[SPTAudioStreamingMetadataTrackDuration] integerValue]];
   }
 }
 
@@ -398,6 +402,11 @@ static NSString *CellIdentifier = @"Register";
   } else {
     self.shouldGetTopTracks = YES;
   }
+}
+
+-(BOOL)currentQuality
+{
+  return self.shouldGetTopTracks;
 }
 
 #pragma mark - NowPlaying Delegate

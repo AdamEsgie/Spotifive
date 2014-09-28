@@ -23,10 +23,13 @@
 
 @implementation TrackQualityView
 
-- (instancetype)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame andDelegate:(id<TrackQualityViewDelegate>)delegate;
 {
   self = [super initWithFrame:frame];
   if (self) {
+    
+    self.delegate = delegate;
+    
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.frame = self.bounds;
@@ -40,8 +43,12 @@
     self.qualityButton.frame = CGRectMake(self.width/2 - 80, self.height/2 - 85, 160, 160);
     [self.qualityButton addTarget:self action:@selector(qualityButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     self.qualityButton.backgroundColor = [UIColor clearColor];
-    [self.qualityButton setImage:[UIImage imageNamed:@"smiley"] forState:UIControlStateNormal];
-    [self.qualityButton setImage:[UIImage imageNamed:@"not-smiley"] forState:UIControlStateSelected];
+    
+    if ([self.delegate currentQuality]) {
+      [self.qualityButton setImage:[UIImage imageNamed:@"smiley"] forState:UIControlStateNormal];
+    } else {
+      [self.qualityButton setImage:[UIImage imageNamed:@"not-smiley"] forState:UIControlStateNormal];
+    }
     
     self.closeButton = [UIButton new];
     self.closeButton.frame = CGRectMake(10 , 30, 40, 40);
@@ -74,14 +81,16 @@
 -(IBAction)qualityButtonTapped:(id)sender
 {
   [self.delegate toggleQuality];
-  if (self.qualityButton.selected) {
-    [self.qualityButton setSelected:NO];
+  
+  if ([self.delegate currentQuality]) {
+    [self.qualityButton setImage:[UIImage imageNamed:@"smiley"] forState:UIControlStateNormal];
+    self.infoLabel.text = @"Best";
   } else {
-    [self.qualityButton setSelected:YES];
+    [self.qualityButton setImage:[UIImage imageNamed:@"not-smiley"] forState:UIControlStateNormal];
+    self.infoLabel.text = @"Worst";
   }
   
   [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-    self.infoLabel.alpha = 0.0f;
     self.qualityButton.imageView.transform = [AnimationHelper scaleCustomTransform:self.qualityButton withScale:110.0];
   } completion:^(BOOL finished) {
     

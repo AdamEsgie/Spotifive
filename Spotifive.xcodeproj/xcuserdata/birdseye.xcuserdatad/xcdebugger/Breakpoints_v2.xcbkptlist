@@ -20,12 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Spotifive/ViewControllers/TracksViewController.m"
-            timestampString = "433461994.937897"
+            timestampString = "433623966.874607"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
-            landmarkName = "-audioStreamingDidLosePermissionForPlayback:"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
+            landmarkName = "-audioStreaming:didChangePlaybackStatus:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -68,13 +68,13 @@
   return self;
 }
 
--(void)addArtistCoverArt
+-(void)addArtistCoverArtForArtist:(SPTArtist*)artist
 {
   self.isLoadingImage = YES;
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
     NSError *error = nil;
     UIImage *image = nil;
-    NSData *imageData = [NSData dataWithContentsOfURL:self.artist.largestImage.imageURL options:0 error:&error];
+    NSData *imageData = [NSData dataWithContentsOfURL:artist.largestImage.imageURL options:0 error:&error];
     
     if (imageData != nil) {
       image = [UIImage imageWithData:imageData];

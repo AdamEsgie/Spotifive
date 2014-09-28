@@ -23,7 +23,7 @@
   return sharedManager;
 }
 
--(void)searchArtistsWithString:(NSString*)artistName success:(void (^)(SPTArtist*))success error:(void (^)(NSError*))error
+-(void)searchArtistsWithString:(NSString*)artistName success:(void (^)(SPTArtist*))success error:(void (^)(NSError*))errorBlock
 {
   SPTSession *session = [SettingsHelper session];
   
@@ -33,6 +33,7 @@
     
     if (error != nil) {
       NSLog(@"*** Auth error: %@", error);
+      errorBlock(error);
       return;
     }
     
@@ -43,6 +44,7 @@
       
       if (error != nil) {
         NSLog(@"*** Auth error: %@", error);
+        errorBlock(error);
         return;
       }
       
@@ -53,29 +55,90 @@
   }];
 }
 
--(void)searchArtistsRelatedToArtist:(SPTArtist*)artist success:(void (^)(NSArray*))success error:(void (^)(NSError*))error;
+-(void)generatePlaylistTracksRelatedToArtist:(SPTArtist*)artist withType:(BOOL)good success:(void (^)(NSArray*))success error:(void (^)(NSError*))errorBlock;
 {
   SPTSession *session = [SettingsHelper session];
+  __block NSArray *artistArray;
   
   if (!session) return;
   
   [artist requestRelatedArtists:session callback:^(NSError *error, id object) {
     if (error != nil) {
       NSLog(@"*** Auth error: %@", error);
+      errorBlock(error);
       return;
     }
     
-    NSArray *artistArray = [NSArray arrayWithArray:object];
-    if (artistArray.count > 5) {
-      success([artistArray subarrayWithRange:NSMakeRange(0, 5)]);
-    } else {
-      success(artistArray);
-    }
+    artistArray = [NSArray arrayWithArray:object];
     
+//    if (artistArray.count > 5) {
+//      artistArray = [artistArray subarrayWithRange:NSMakeRange(0, 5)];
+//    }
+  
+    [self fillArtistAndTrackDictionaryForArtistArray:artistArray withType:good success:^(NSArray *arrayOfDictionaries) {
+      
+      success(arrayOfDictionaries);
+      
+    } error:^(NSError *error) {
+      if (error != nil) {
+        NSLog(@"*** Auth error: %@", error);
+        errorBlock(error);
+        return;
+      }
+    }];
   }];
 }
 
--(void)searchTopTracksForArtist:(SPTArtist*)artist success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))error
+-(void)fillArtistAndTrackDictionaryForArtistArray:(NSArray*)artistArray withType:(BOOL)good success:(void (^)(NSArray*))success error:(void (^)(NSError*))errorBlock
+{
+  NSMutableArray *arrayOfArtistDictionaries = [NSMutableArray array];
+  
+  for (SPTArtist *artist in artistArray)
+  {
+    NSMutableDictionary *artistDict = [NSMutableDictionary dictionary];
+    
+    if (good) {
+      
+      [self searchTopTracksForArtist:artist success:^(SPTTrack *track) {
+        
+        if (!track) {
+          return;
+        }
+        
+        artistDict[@"artist"] = artist;
+        artistDict[@"track"] = track;
+        [arrayOfArtistDictionaries addObject:artistDict];
+        
+        if (arrayOfArtistDictionaries.count == 5) {
+          success (arrayOfArtistDictionaries);
+          return;
+        }
+        
+      } error:^(NSError *error) {
+        errorBlock(error);
+      }];
+      
+    } else {
+      
+      [self searchWorstTracksForArtist:artist success:^(SPTTrack *track) {
+        
+        artistDict[@"artist"] = artist;
+        artistDict[@"track"] = track;
+        [arrayOfArtistDictionaries addObject:artistDict];
+        
+        if (arrayOfArtistDictionaries.count == 5) {
+          success (arrayOfArtistDictionaries);
+          return;
+        }
+        
+      } error:^(NSError *error) {
+        errorBlock(error);
+      }];
+    }
+  }
+}
+
+-(void)searchTopTracksForArtist:(SPTArtist*)artist success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))errorBlock
 {
   [artist requestTopTracksForTerritory:kCountryCode withSession:[SettingsHelper session] callback:^(NSError *error, id object) {
     
