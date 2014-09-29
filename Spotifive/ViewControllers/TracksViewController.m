@@ -246,11 +246,12 @@ static NSString *CellIdentifier = @"Register";
     
     [[APIRequester sharedInstance] generatePlaylistTracksRelatedToArtist:artist withType:self.shouldGetTopTracks success:^(NSArray *playlist) {
     
+      self.currentTrack = nil;
       self.playlist = nil;
-      self.playlist = playlist;
       if ([self.player isPlaying]) {
         [self playOrPauseMusic];
       }
+      self.playlist = playlist;
       [ProgressHUD dismiss];
       
       [self.tableView reloadData];
@@ -349,9 +350,9 @@ static NSString *CellIdentifier = @"Register";
 {
   NSLog(@"%hhd", isPlaying);
   
-  if (isPlaying == NO && !self.paused) {
+  if (isPlaying == NO && !self.paused && self.playlist) {
     
-    if ([self.playlist lastObject][@"track"] == self.currentTrack) {
+    if ([(SPTTrack*)[self.playlist lastObject][@"track"] name] == self.currentTrack.name) {
       return;
     
     } else {
@@ -366,11 +367,12 @@ static NSString *CellIdentifier = @"Register";
     }
 
   } else if (isPlaying == YES) {
+    
     NSString *trackName = self.player.currentTrackMetadata[SPTAudioStreamingMetadataTrackName];
     
     for (NSDictionary *dict in self.playlist)
     {
-      if ([[dict[@"track"] name] isEqualToString:trackName]) {
+      if ([[(SPTTrack*)dict[@"track"] name] isEqualToString:trackName]) {
         self.currentTrack = dict[@"track"];
       }
     }
