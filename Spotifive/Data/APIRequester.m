@@ -72,6 +72,8 @@
       
       if (artistArray.count >= 5) {
         artistArray = [artistArray subarrayWithRange:NSMakeRange(0, 5)];
+      } else {
+        errorBlock(error);
       }
       
       [self fillArtistAndTrackDictionaryForArtistArray:artistArray withType:good success:^(NSArray *arrayOfDictionaries) {
@@ -95,6 +97,8 @@
 {
   __block NSMutableArray *arrayOfArtistDictionaries = [NSMutableArray array];
   
+  __block NSInteger counter = 0;
+  
   for (SPTArtist *artist in artistArray)
   {
     NSMutableDictionary *artistDict = [NSMutableDictionary dictionary];
@@ -103,15 +107,15 @@
       
       [self searchTopTracksForArtist:artist success:^(SPTTrack *track) {
         
-        if (!track) {
-          return;
+        if (track) {
+          artistDict[@"artist"] = artist;
+          artistDict[@"track"] = track;
+          [arrayOfArtistDictionaries addObject:artistDict];
         }
         
-        artistDict[@"artist"] = artist;
-        artistDict[@"track"] = track;
-        [arrayOfArtistDictionaries addObject:artistDict];
+        counter++;
         
-        if (arrayOfArtistDictionaries.count == 5) {
+        if (counter == 5) {
           success (arrayOfArtistDictionaries);
           return;
         }
@@ -125,15 +129,15 @@
       
       [self searchWorstTracksForArtist:artist success:^(SPTTrack *track) {
         
-        if (!track) {
-          return;
+        if (track) {
+          artistDict[@"artist"] = artist;
+          artistDict[@"track"] = track;
+          [arrayOfArtistDictionaries addObject:artistDict];
         }
         
-        artistDict[@"artist"] = artist;
-        artistDict[@"track"] = track;
-        [arrayOfArtistDictionaries addObject:artistDict];
-        
-        if (arrayOfArtistDictionaries.count == 5) {
+        counter++;
+
+        if (counter == 5) {
           success (arrayOfArtistDictionaries);
           return;
         }
@@ -160,14 +164,20 @@
 {
   [self searcAllAlbumsForArtist:artist success:^(SPTAlbum *album) {
     
-    [self searcAllTracksForAlbum:album success:^(SPTTrack *track) {
-      
-      success(track);
+    if (album) {
     
-    } error:^(NSError *error) {
-      errorBlock(error);
-      return;
-    }];
+      [self searcAllTracksForAlbum:album success:^(SPTTrack *track) {
+        
+        success(track);
+      
+      } error:^(NSError *error) {
+        errorBlock(error);
+        return;
+      }];
+    
+    } else {
+      success(nil);
+    }
     
   } error:^(NSError *error) {
     errorBlock(error);
@@ -186,10 +196,15 @@
         return;
       }
       
+      SPTArtist *artist = artist;
       SPTListPage *listPage = object;
       NSArray *albumsArray = [NSArray arrayWithArray:listPage.items];
       NSMutableArray *albumsArrayCopy = [NSMutableArray arrayWithArray:albumsArray];
       NSMutableArray *albumsByPopularity = [NSMutableArray array];
+      
+      if (albumsArray.count == 0) {
+        success(nil);
+      }
       
       for (int i = 0; i < albumsArray.count; i++)
       {
