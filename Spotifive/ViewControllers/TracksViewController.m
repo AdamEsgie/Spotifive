@@ -30,6 +30,7 @@ static NSString *CellIdentifier = @"Register";
 @property (nonatomic, strong) NowPlayingView *nowPlayingView;
 @property (nonatomic, strong) SPTAudioStreamingController *player;
 @property (nonatomic, strong) TrackQualityView *trackQualityView;
+@property (nonatomic, strong) SPTTrack *currentTrack;
 @property BOOL shouldGetTopTracks;
 @property BOOL paused;
 
@@ -245,6 +246,7 @@ static NSString *CellIdentifier = @"Register";
     
     [[APIRequester sharedInstance] generatePlaylistTracksRelatedToArtist:artist withType:self.shouldGetTopTracks success:^(NSArray *playlist) {
     
+      self.playlist = nil;
       self.playlist = playlist;
       [ProgressHUD dismiss];
       
@@ -342,8 +344,34 @@ static NSString *CellIdentifier = @"Register";
 
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying
 {
+  NSLog(@"%hhd", isPlaying);
+  
   if (isPlaying == NO && !self.paused) {
+    
+    if ([self.playlist lastObject][@"track"] == self.currentTrack) {
+      return;
+    
+    } else {
+      for (int i = 0; i < self.playlist.count; i++)
+      {
+        NSDictionary *dict = [self.playlist objectAtIndex:i];
+        if (self.currentTrack == dict[@"track"]) {
+          [self.player playTrackProvider:[self.playlist objectAtIndex:i+1][@"track"] callback:^(NSError *error) {}];
+        }
+          
+      }
+    }
 
+  } else if (isPlaying == YES) {
+    NSString *trackName = self.player.currentTrackMetadata[SPTAudioStreamingMetadataTrackName];
+    
+    for (NSDictionary *dict in self.playlist)
+    {
+      if ([[dict[@"track"] name] isEqualToString:trackName]) {
+        self.currentTrack = dict[@"track"];
+      }
+    }
+    
   }
 }
 
@@ -361,6 +389,8 @@ static NSString *CellIdentifier = @"Register";
       
       if ([[dict[@"track"] name] isEqualToString:trackMetadata[SPTAudioStreamingMetadataTrackName]]) {
         [self.nowPlayingView addArtistCoverArtForArtist:dict[@"artist"]];
+        
+        self.currentTrack = dict[@"track"];
         
         [(TrackTableViewCell*)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]] addPlayToAccessoryView];
       } else {

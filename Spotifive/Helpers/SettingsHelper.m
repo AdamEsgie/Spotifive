@@ -8,6 +8,7 @@
 
 #import "SettingsHelper.h"
 #import <Spotify/Spotify.h>
+#import "APIRequester.h"
 
 @implementation SettingsHelper
 

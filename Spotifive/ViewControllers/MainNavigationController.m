@@ -11,6 +11,8 @@
 #import "SettingsHelper.h"
 #import "LoginViewController.h"
 #import "TracksViewController.h"
+#import "APIRequester.h"
+#import "ProgressHUD.h"
 
 @interface MainNavigationController ()
 
@@ -40,14 +42,13 @@
   
   if (session) {
 
-    if ([session isValid]) {
+    [[APIRequester sharedInstance] fetchToken:^(SPTSession *session) {
       [self setupTrackController];
       [self pushViewController:self.tracksController animated:NO];
-      
-    } else {
-      [self renewTokenAndEnablePlayback];
-      
-    }
+    } error:^(NSError *error) {
+      [ProgressHUD showError:@"Error Renewing Token"];
+    }];
+    
   } else {
     [self setupLoginController];
     [self pushViewController:self.loginController animated:NO];
@@ -55,19 +56,14 @@
   }
 }
 
-- (void)renewTokenAndEnablePlayback {
-
-  SPTSession *session = [SettingsHelper session];
-  SPTAuth *auth = [SPTAuth defaultInstance];
-  
-  [auth renewSession:session withServiceEndpointAtURL:[NSURL URLWithString:kTokenRefreshServiceURL] callback:^(NSError *error, SPTSession *session) {
-    if (error) {
-      NSLog(@"*** Error renewing session: %@", error);
-      return;
-    }
-    [SettingsHelper setupSPTSession:session];
+- (void)renewTokenAndEnablePlayback
+{
+  [[APIRequester sharedInstance] renewTokenAndEnablePlaybackWithSuccess:^(SPTSession *session) {
+    
     [self didFinishAuthorizingUserWithSession];
     
+  } error:^(NSError *error) {
+    [ProgressHUD showError:@"Error renewing token"];
   }];
 }
 
