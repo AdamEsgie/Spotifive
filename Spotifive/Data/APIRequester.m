@@ -111,7 +111,7 @@
         artistDict[@"track"] = track;
         [arrayOfArtistDictionaries addObject:artistDict];
         
-        if (arrayOfArtistDictionaries.count == 5 || artist == [artistArray lastObject]) {
+        if (arrayOfArtistDictionaries.count == 5) {
           success (arrayOfArtistDictionaries);
           return;
         }
@@ -133,7 +133,7 @@
         artistDict[@"track"] = track;
         [arrayOfArtistDictionaries addObject:artistDict];
         
-        if (arrayOfArtistDictionaries.count == 5 || artist == [artistArray lastObject]) {
+        if (arrayOfArtistDictionaries.count == 5) {
           success (arrayOfArtistDictionaries);
           return;
         }

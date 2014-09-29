@@ -248,6 +248,9 @@ static NSString *CellIdentifier = @"Register";
     
       self.playlist = nil;
       self.playlist = playlist;
+      if ([self.player isPlaying]) {
+        [self playOrPauseMusic];
+      }
       [ProgressHUD dismiss];
       
       [self.tableView reloadData];
