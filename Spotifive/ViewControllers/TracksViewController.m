@@ -424,6 +424,7 @@ static NSString *CellIdentifier = @"Register";
 #pragma mark - TrackQualityView Delegate
 -(void)dismissKeyboard
 {
+  [ProgressHUD dismiss];
   [self.textField resignFirstResponder];
   [self.sendButton removeTarget:self action:@selector(send:) forControlEvents:UIControlEventTouchUpInside];
   [self.sendButton addTarget:self action:@selector(search:) forControlEvents:UIControlEventTouchUpInside];
