@@ -12,6 +12,7 @@
 
 -(void)dismissKeyboard;
 -(void)toggleQuality;
+-(BOOL)currentQuality;
 
 @end
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic, weak) id <TrackQualityViewDelegate> delegate;
 
-- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithFrame:(CGRect)frame andDelegate:(id<TrackQualityViewDelegate>
+)delegate;
 
 @end

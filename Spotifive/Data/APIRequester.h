@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class SPTArtist, SPTTrack;
+@class SPTArtist, SPTTrack, SPTSession;
 
 @interface APIRequester : NSObject
 
@@ -16,8 +16,8 @@
 
 -(void)searchArtistsWithString:(NSString*)artistName success:(void (^)(SPTArtist*))success error:(void (^)(NSError*))error;
 
--(void)searchArtistsRelatedToArtist:(SPTArtist*)artist success:(void (^)(NSArray*))success error:(void (^)(NSError*))error;
+-(void)generatePlaylistTracksRelatedToArtist:(SPTArtist*)artist withType:(BOOL)good success:(void (^)(NSArray*))success error:(void (^)(NSError*))error;
 
--(void)searchTopTracksForArtist:(SPTArtist*)artist success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))error;
--(void)searchWorstTracksForArtist:(SPTArtist*)artist success:(void (^)(SPTTrack*))success error:(void (^)(NSError*))error;
+-(void)renewTokenAndEnablePlaybackWithSuccess:(void (^)(SPTSession*))success error:(void (^)(NSError*))error;
+-(void)fetchToken:(void (^)(SPTSession*))success error:(void (^)(NSError*))error;
 @end

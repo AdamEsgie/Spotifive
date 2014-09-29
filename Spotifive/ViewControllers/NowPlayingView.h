@@ -19,12 +19,11 @@
 @interface NowPlayingView : UIView
 
 @property (nonatomic, weak) id <NowPlayingViewDelegate> delegate;
-@property (nonatomic, strong) SPTArtist *artist;
 @property (nonatomic, strong) UIView *refreshView;
 @property (nonatomic, strong) NSTimer *timer;
 
 -(instancetype)initWithFrame:(CGRect)frame;
--(void)addArtistCoverArt;
+-(void)addArtistCoverArtForArtist:(SPTArtist*)artist;
 -(void)updateLabelsWithName:(NSString*)name andInterval:(NSTimeInterval)interval;
 -(void)setupSmileyWithOption:(BOOL)option;
 
