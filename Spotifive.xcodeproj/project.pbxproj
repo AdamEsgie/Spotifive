@@ -34,7 +34,6 @@
 		CA5E57D719D48C340087DCCF /* AnimationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57D619D48C340087DCCF /* AnimationHelper.m */; };
 		CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */; };
 		CA5E57EF19D4B14C0087DCCF /* NowPlayingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */; };
-		CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */; };
 		CA5E8C1D19D4E48800DDB4AD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */; };
 		CA5E8C1F19D4E49500DDB4AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */; };
 		CA5E8C2119D4E49B00DDB4AD /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */; };
@@ -42,6 +41,7 @@
 		CA5E8C2519D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
 		CA8A069919D85ABD0011749D /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA8A069619D85ABD0011749D /* ProgressHUD.bundle */; };
 		CA8A069A19D85ABD0011749D /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8A069819D85ABD0011749D /* ProgressHUD.m */; };
+		CAC2C89E19D9062A00897FA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC2C89D19D9062A00897FA9 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,6 @@
 		CA5E572419D2DD3B0087DCCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		CA5E572519D2DD3B0087DCCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		CA5E572D19D2DD3B0087DCCF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		CA5E573019D2DD3B0087DCCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		CA5E573619D2DD3B0087DCCF /* SpotifiveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SpotifiveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA5E573B19D2DD3B0087DCCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA5E573C19D2DD3B0087DCCF /* SpotifiveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpotifiveTests.m; sourceTree = "<group>"; };
@@ -87,8 +86,6 @@
 		CA5E57D619D48C340087DCCF /* AnimationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AnimationHelper.m; path = Helpers/AnimationHelper.m; sourceTree = "<group>"; };
 		CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NowPlayingView.h; path = ViewControllers/NowPlayingView.h; sourceTree = "<group>"; };
 		CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NowPlayingView.m; path = ViewControllers/NowPlayingView.m; sourceTree = "<group>"; };
-		CA5E8C0D19D4DC8C00DDB4AD /* RefreshView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RefreshView.h; path = Helpers/RefreshView.h; sourceTree = "<group>"; };
-		CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RefreshView.m; path = Helpers/RefreshView.m; sourceTree = "<group>"; };
 		CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
@@ -98,6 +95,7 @@
 		CA8A069719D85ABD0011749D /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
 		CA8A069819D85ABD0011749D /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		CA8A069C19D85C250011749D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		CAC2C89D19D9062A00897FA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +127,7 @@
 		CA5E571419D2DD3B0087DCCF = {
 			isa = PBXGroup;
 			children = (
+				CAC2C89D19D9062A00897FA9 /* Default-568h@2x.png */,
 				CA5E571F19D2DD3B0087DCCF /* Spotifive */,
 				CA5E573919D2DD3B0087DCCF /* SpotifiveTests */,
 				CA5E571E19D2DD3B0087DCCF /* Products */,
@@ -173,7 +172,6 @@
 				CA5E572119D2DD3B0087DCCF /* Info.plist */,
 				CA5E572219D2DD3B0087DCCF /* main.m */,
 				CA5E572D19D2DD3B0087DCCF /* Images.xcassets */,
-				CA5E572F19D2DD3B0087DCCF /* LaunchScreen.xib */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -213,8 +211,6 @@
 		CA5E579019D2E4EC0087DCCF /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				CA5E8C0D19D4DC8C00DDB4AD /* RefreshView.h */,
-				CA5E8C0E19D4DC8C00DDB4AD /* RefreshView.m */,
 				CA5E57D519D48C340087DCCF /* AnimationHelper.h */,
 				CA5E57D619D48C340087DCCF /* AnimationHelper.m */,
 				CA5E57B119D458060087DCCF /* SettingsHelper.h */,
@@ -354,6 +350,7 @@
 			files = (
 				CA8A069919D85ABD0011749D /* ProgressHUD.bundle in Resources */,
 				CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */,
+				CAC2C89E19D9062A00897FA9 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,7 +374,6 @@
 				CA5E8C2419D53DB500DDB4AD /* TrackQualityView.m in Sources */,
 				CA5E57BF19D4581D0087DCCF /* LoginViewController.m in Sources */,
 				CA5E57CB19D47A6E0087DCCF /* UIView+MCSizes.m in Sources */,
-				CA5E8C0F19D4DC8C00DDB4AD /* RefreshView.m in Sources */,
 				CA5E57B319D458060087DCCF /* SettingsHelper.m in Sources */,
 				CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */,
 				CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
@@ -415,17 +411,6 @@
 			targetProxy = CA5E573719D2DD3B0087DCCF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		CA5E572F19D2DD3B0087DCCF /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CA5E573019D2DD3B0087DCCF /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CA5E573E19D2DD3B0087DCCF /* Debug */ = {
@@ -526,6 +511,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Adam Salvitti-Gucwa (66AR5NCUU4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Spotifive/Frameworks/ios-sdk-beta-5",
@@ -537,6 +523,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "0d5ab06b-5f4f-43a0-98d4-c412dfdade64";
 			};
 			name = Release;
 		};

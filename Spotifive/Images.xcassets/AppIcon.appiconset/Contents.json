@@ -3,37 +3,37 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Rectangle 4.png",
+      "filename" : "appicon29.png",
       "scale" : "2x"
     },
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Rectangle 4@2x.png",
+      "filename" : "appicon293x.png",
       "scale" : "3x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Rectangle 5@2x.png",
+      "filename" : "appicon40 2x.png",
       "scale" : "2x"
     },
     {
       "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Rectangle 5.png",
+      "filename" : "appicon40 3x.png",
       "scale" : "3x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Rectangle 6.png",
+      "filename" : "appicon40 3x-1.png",
       "scale" : "2x"
     },
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Rectangle 6@2x.png",
+      "filename" : "appicon60 3x.png",
       "scale" : "3x"
     }
   ],

@@ -9,7 +9,6 @@
 #import "NowPlayingView.h"
 #import <Spotify/Spotify.h>
 #import "UIView+MCSizes.h"
-#import "RefreshView.h"
 #import "SettingsHelper.h"
 
 @interface NowPlayingView ()
@@ -123,7 +122,7 @@
   }
   
   if ([seconds integerValue] == 60) {
-    minutes = [NSString stringWithFormat:@"%ld",[minutes integerValue] + 1];
+    minutes = [NSString stringWithFormat:@"%d",[minutes integerValue] + 1];
     seconds = @"00";
   }
   

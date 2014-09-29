@@ -9,7 +9,6 @@
 #import "TrackTableViewCell.h"
 #import "SettingsHelper.h"
 #import "UIView+MCSizes.h"
-#import "RefreshView.h"
 
 @implementation TrackTableViewCell
 
