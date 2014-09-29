@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */; };
-		CA466D9F19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */; };
 		CA466DA019D6065E00C8DCB1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CA5E572D19D2DD3B0087DCCF /* Images.xcassets */; };
 		CA5E572319D2DD3B0087DCCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E572219D2DD3B0087DCCF /* main.m */; };
 		CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E572519D2DD3B0087DCCF /* AppDelegate.m */; };
@@ -37,11 +35,11 @@
 		CA5E8C1D19D4E48800DDB4AD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */; };
 		CA5E8C1F19D4E49500DDB4AD /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */; };
 		CA5E8C2119D4E49B00DDB4AD /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */; };
-		CA5E8C2419D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
-		CA5E8C2519D53DB500DDB4AD /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */; };
-		CA8A069919D85ABD0011749D /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CA8A069619D85ABD0011749D /* ProgressHUD.bundle */; };
-		CA8A069A19D85ABD0011749D /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CA8A069819D85ABD0011749D /* ProgressHUD.m */; };
 		CAC2C89E19D9062A00897FA9 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CAC2C89D19D9062A00897FA9 /* Default-568h@2x.png */; };
+		CAC2C8A619D9BABF00897FA9 /* ProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CAC2C8A319D9BABF00897FA9 /* ProgressHUD.bundle */; };
+		CAC2C8A719D9BABF00897FA9 /* ProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC2C8A519D9BABF00897FA9 /* ProgressHUD.m */; };
+		CAC2C8AA19D9BAF800897FA9 /* TrackTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC2C8A919D9BAF800897FA9 /* TrackTableViewCell.m */; };
+		CAC2C8AD19D9BB0000897FA9 /* TrackQualityView.m in Sources */ = {isa = PBXBuildFile; fileRef = CAC2C8AC19D9BB0000897FA9 /* TrackQualityView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +53,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		CA466D9C19D5F4D600C8DCB1 /* TrackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewCell.h; sourceTree = "<group>"; };
-		CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackTableViewCell.m; sourceTree = "<group>"; };
 		CA5E571D19D2DD3B0087DCCF /* Spotifive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotifive.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA5E572119D2DD3B0087DCCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA5E572219D2DD3B0087DCCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -89,13 +85,15 @@
 		CA5E8C1C19D4E48800DDB4AD /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CA5E8C1E19D4E49500DDB4AD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		CA5E8C2019D4E49B00DDB4AD /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackQualityView.h; sourceTree = "<group>"; };
-		CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackQualityView.m; sourceTree = "<group>"; };
-		CA8A069619D85ABD0011749D /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
-		CA8A069719D85ABD0011749D /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
-		CA8A069819D85ABD0011749D /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
 		CA8A069C19D85C250011749D /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		CAC2C89D19D9062A00897FA9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		CAC2C8A319D9BABF00897FA9 /* ProgressHUD.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ProgressHUD.bundle; sourceTree = "<group>"; };
+		CAC2C8A419D9BABF00897FA9 /* ProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressHUD.h; sourceTree = "<group>"; };
+		CAC2C8A519D9BABF00897FA9 /* ProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressHUD.m; sourceTree = "<group>"; };
+		CAC2C8A819D9BAF800897FA9 /* TrackTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrackTableViewCell.h; path = ViewControllers/SupplementalViews/TrackTableViewCell.h; sourceTree = "<group>"; };
+		CAC2C8A919D9BAF800897FA9 /* TrackTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrackTableViewCell.m; path = ViewControllers/SupplementalViews/TrackTableViewCell.m; sourceTree = "<group>"; };
+		CAC2C8AB19D9BB0000897FA9 /* TrackQualityView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TrackQualityView.h; path = ViewControllers/SupplementalViews/TrackQualityView.h; sourceTree = "<group>"; };
+		CAC2C8AC19D9BB0000897FA9 /* TrackQualityView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TrackQualityView.m; path = ViewControllers/SupplementalViews/TrackQualityView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,7 +222,7 @@
 		CA5E579219D3390D0087DCCF /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				CA8A069519D85ABD0011749D /* ProgressHUD */,
+				CAC2C8A219D9BABF00897FA9 /* ProgressHUD */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -248,24 +246,25 @@
 		CA8A069419D85A320011749D /* Supplemental Views */ = {
 			isa = PBXGroup;
 			children = (
-				CA466D9C19D5F4D600C8DCB1 /* TrackTableViewCell.h */,
-				CA466D9D19D5F4D600C8DCB1 /* TrackTableViewCell.m */,
-				CA5E8C2219D53DB500DDB4AD /* TrackQualityView.h */,
-				CA5E8C2319D53DB500DDB4AD /* TrackQualityView.m */,
+				CAC2C8A819D9BAF800897FA9 /* TrackTableViewCell.h */,
+				CAC2C8A919D9BAF800897FA9 /* TrackTableViewCell.m */,
+				CAC2C8AB19D9BB0000897FA9 /* TrackQualityView.h */,
+				CAC2C8AC19D9BB0000897FA9 /* TrackQualityView.m */,
 				CA5E57EC19D4B14C0087DCCF /* NowPlayingView.h */,
 				CA5E57ED19D4B14C0087DCCF /* NowPlayingView.m */,
 			);
 			name = "Supplemental Views";
 			sourceTree = "<group>";
 		};
-		CA8A069519D85ABD0011749D /* ProgressHUD */ = {
+		CAC2C8A219D9BABF00897FA9 /* ProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				CA8A069619D85ABD0011749D /* ProgressHUD.bundle */,
-				CA8A069719D85ABD0011749D /* ProgressHUD.h */,
-				CA8A069819D85ABD0011749D /* ProgressHUD.m */,
+				CAC2C8A319D9BABF00897FA9 /* ProgressHUD.bundle */,
+				CAC2C8A419D9BABF00897FA9 /* ProgressHUD.h */,
+				CAC2C8A519D9BABF00897FA9 /* ProgressHUD.m */,
 			);
-			path = ProgressHUD;
+			name = ProgressHUD;
+			path = Libraries/ProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,9 +347,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CA8A069919D85ABD0011749D /* ProgressHUD.bundle in Resources */,
 				CA5E572E19D2DD3B0087DCCF /* Images.xcassets in Resources */,
 				CAC2C89E19D9062A00897FA9 /* Default-568h@2x.png in Resources */,
+				CAC2C8A619D9BABF00897FA9 /* ProgressHUD.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,15 +369,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA5E57B719D4580F0087DCCF /* TracksViewController.m in Sources */,
+				CAC2C8AA19D9BAF800897FA9 /* TrackTableViewCell.m in Sources */,
+				CAC2C8A719D9BABF00897FA9 /* ProgressHUD.m in Sources */,
 				CA5E57BB19D458160087DCCF /* MainNavigationController.m in Sources */,
-				CA5E8C2419D53DB500DDB4AD /* TrackQualityView.m in Sources */,
 				CA5E57BF19D4581D0087DCCF /* LoginViewController.m in Sources */,
 				CA5E57CB19D47A6E0087DCCF /* UIView+MCSizes.m in Sources */,
 				CA5E57B319D458060087DCCF /* SettingsHelper.m in Sources */,
-				CA466D9E19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */,
 				CA5E57EE19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
+				CAC2C8AD19D9BB0000897FA9 /* TrackQualityView.m in Sources */,
 				CA5E57D719D48C340087DCCF /* AnimationHelper.m in Sources */,
-				CA8A069A19D85ABD0011749D /* ProgressHUD.m in Sources */,
 				CA5E572619D2DD3B0087DCCF /* AppDelegate.m in Sources */,
 				CA5E57AF19D457F90087DCCF /* APIRequester.m in Sources */,
 				CA5E572319D2DD3B0087DCCF /* main.m in Sources */,
@@ -390,13 +389,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA5E57B819D4580F0087DCCF /* TracksViewController.m in Sources */,
-				CA5E8C2519D53DB500DDB4AD /* TrackQualityView.m in Sources */,
 				CA5E57B419D458060087DCCF /* SettingsHelper.m in Sources */,
 				CA5E57C019D4581D0087DCCF /* LoginViewController.m in Sources */,
 				CA5E57BC19D458160087DCCF /* MainNavigationController.m in Sources */,
 				CA5E57B019D457F90087DCCF /* APIRequester.m in Sources */,
 				CA5E57EF19D4B14C0087DCCF /* NowPlayingView.m in Sources */,
-				CA466D9F19D5F4D600C8DCB1 /* TrackTableViewCell.m in Sources */,
 				CA5E573D19D2DD3B0087DCCF /* SpotifiveTests.m in Sources */,
 				CA5E57CC19D47A6E0087DCCF /* UIView+MCSizes.m in Sources */,
 			);
