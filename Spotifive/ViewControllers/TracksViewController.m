@@ -271,6 +271,9 @@ static NSString *CellIdentifier = @"Register";
         } completion:^(BOOL finished) {
           
           [self.player playTrackProvider:[self.playlist objectAtIndex:0][@"track"] callback:^(NSError *error) {
+            
+            self.currentTrack = [self.playlist objectAtIndex:0][@"track"];
+            
           }];
         }];
         
@@ -348,8 +351,6 @@ static NSString *CellIdentifier = @"Register";
 
 - (void) audioStreaming:(SPTAudioStreamingController *)audioStreaming didChangePlaybackStatus:(BOOL)isPlaying
 {
-  NSLog(@"%hhd", isPlaying);
-  
   if (isPlaying == NO && !self.paused && self.playlist) {
     
     if ([(SPTTrack*)[self.playlist lastObject][@"track"] name] == self.currentTrack.name) {
